@@ -6,7 +6,7 @@
     <style>
     #main,footer{ padding:1em }
     </style>
-    <link rel="stylesheet" href="templates/style.css">
+    <link rel="stylesheet" href="style.css">
     {/block}
 </head>
 <body>
