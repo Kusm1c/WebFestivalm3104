@@ -2,11 +2,8 @@
 <head>
     <title>{block name=title}Default Page Title{/block}</title>
     {block name=head}
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-        <style>
-        #main,footer{ padding:1em }
-        </style>
-        <link rel="stylesheet" href="./style.css">
+        <!-- Ajout CSS Bootstrap !-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     {/block}
 </head>
 
@@ -17,7 +14,11 @@
     <a href="register">Inscription<a>
     <a href="profil">Profil</a>
 {/block}
+{block name=body}
+Contenu générique
+{/block}
 
-{block name=body}Contenu générique{/block}
+<!-- Ajout JavaScript Bootstrap !-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
