@@ -1,8 +1,8 @@
 <?php
-    require '../../../includes/flight-master/flight/Flight.php';
-    require '../../../includes/smarty/libs/Smarty.class.php';
-    require '../../../includes/pdo.php';
-    include 'routes.php';
+    require 'index-config.php';
+    require 'routes.php';
+
+    Flight::set('pdo',$pdo);
 
     Flight::register('view', 'Smarty', array(), function($smarty){
         $smarty->template_dir = './templates_tpl/';
@@ -14,8 +14,6 @@
         Flight::view()->assign($data);
         Flight::view()->display($template);
        });
-    
-    Flight::set('pdo',$pdo);
     
     Flight::start();
 ?>
