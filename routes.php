@@ -13,4 +13,9 @@ Flight::route('GET /login', function(){
     Flight::render("login.tpl",array());
 });
 
+Flight::route('GET /formulaire', function(){
+    Flight::render("form_candidat.tpl",array());
+});
+
+
 ?>

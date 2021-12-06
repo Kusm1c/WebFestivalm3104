@@ -13,6 +13,7 @@
     <a href="login">Connexion</a>
     <a href="register">Inscription<a>
     <a href="profil">Profil</a>
+    <a href="formulaire">Formulaire Candidat</a>
 {/block}
 {block name=body}
 Contenu générique

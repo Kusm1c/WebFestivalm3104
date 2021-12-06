@@ -1,5 +1,5 @@
-{extends file='success.tpl'}
-{block name=title}Register{/block}
+{*{extends file='success.tpl'}*}
+{block name=title}Formulaire de Candidature{/block}
 {block name=body}
 <h1>Register</h1>
 <div id='main'>
@@ -167,8 +167,8 @@
       <label for="presentation">Presentation :</label>
       <textarea   rows="5" cols="33"  ></textarea>
       <input type="text" id="presentation" name="presentation" placeholder="Maximum 5OO caractères" 
-      maxlength="500" size="10" value= {$value.presentation|escape|default:''>
-	  <span> {$messages.presentation|escape|default:''}</span>
+      maxlength="500" size="10" value= {$value.presentation|escape|default:''}>
+	   <span> {$messages.presentation|escape|default:''}</span>
       
       <label for="exprience">Expériences scéniques :</label>
       <textarea   rows="5" cols="33"  ></textarea>
@@ -264,3 +264,4 @@
     </fieldset>
 </form>
 </div>
+{/block}
