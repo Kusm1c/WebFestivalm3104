@@ -1,4 +1,4 @@
-{*{extends file='success.tpl'}*}
+{extends file='layout.tpl'}
 {block name=title}Formulaire de Candidature{/block}
 {block name=body}
 <h1>Register</h1>
@@ -13,7 +13,7 @@
       	 
       	<select>
         <option value="rien" selected="">Sélectionnez votre département</option>
-		<option value="01">01 - AIN</option>
+		    <option value="01">01 - AIN</option>
         <option value="02">02 - AISNE</option>
         <option value="03">03 - ALLIER</option>
         <option value="04">04 - ALPES DE HAUTE PROVENCE</option>
@@ -150,7 +150,7 @@
         <span> {$messages.mail|escape|default:''}</span>
 
       <label for="phone">téléphone:</label>
-	  <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Telephone"value={$value.phone|escape|default:''} required>
+	    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Telephone"value={$value.phone|escape|default:''} required>
       <span> {$messages.phone|escape|default:''}</span>
       
       
@@ -168,23 +168,23 @@
       <textarea   rows="5" cols="33"  ></textarea>
       <input type="text" id="presentation" name="presentation" placeholder="Maximum 5OO caractères" 
       maxlength="500" size="10" value= {$value.presentation|escape|default:''}>
-	   <span> {$messages.presentation|escape|default:''}</span>
+	    <span> {$messages.presentation|escape|default:''}</span>
       
       <label for="exprience">Expériences scéniques :</label>
       <textarea   rows="5" cols="33"  ></textarea>
       <input type="text" id="experience" name="experience" placeholder="Maximum 5OO          caractères" 
       maxlength="500" size="10" value= {$value.experience|escape|default:''}>
-	  <span> {$messages.experience|escape|default:''}</span>
+	    <span> {$messages.experience|escape|default:''}</span>
       
       <label for="url">Site web ou page facebook :</label>
-	  <input type="url" name="urlsite" id="urlsite"
+	    <input type="url" name="urlsite" id="urlsite"
        placeholder="https://groupedemusique.com"
        pattern="https://.*" size="15" value={$value.urlsite|escape|default:''}
        required >
       <span> {$messages.urlsite|escape|default:''}</span>
       
       <label for="url">Adresse page soundcloud (facultatif)</label>
-	  <input type="url" name="urlsoundcloud" id="urlsoundcloud"
+	    <input type="url" name="urlsoundcloud" id="urlsoundcloud"
        placeholder="https://soundcloud.com"
        pattern="https://.*" size="15" value={$value.urlsoundcloud|escape|default:''}
        required >
@@ -192,7 +192,7 @@
        
       
       <label for="url">Adresse page youtube (facultatif)</label>
-	  <input type="url" name="urlyoutube" id="urlyoutube"
+	    <input type="url" name="urlyoutube" id="urlyoutube"
        placeholder="https://youtube.com"
        pattern="https://.*" size="15" value={$value.urlyoutube|escape|default:''}
        required >
@@ -244,19 +244,19 @@
       
      
 
-      <label for="mp3">3 fichiers mp3</label>
+    <label for="mp3">3 fichiers mp3</label>
 	  <input type="file"id="mp3" name="mp3" accept=".mp3" multiple>
      
-      <label for="dossierpdf">Un dossier de presse PDF (facultatif)</label>
+    <label for="dossierpdf">Un dossier de presse PDF (facultatif)</label>
 	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf">
       
-      <label for="photo"> 2 photos de groupe ( moins de 300 dpi)</label>
-      <input type="file"id="photo" name="photo" accept=".jpg, .jpeg, .png" multiple>
+    <label for="photo"> 2 photos de groupe ( moins de 300 dpi)</label>
+    <input type="file"id="photo" name="photo" accept=".jpg, .jpeg, .png" multiple>
       
-      <label for="techniquepdf">Une fiche technique PDF</label>
+    <label for="techniquepdf">Une fiche technique PDF</label>
 	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf">
       
-      <label for="sacempdf">Un document SACEM PDF</label>
+    <label for="sacempdf">Un document SACEM PDF</label>
 	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf">
  
 
