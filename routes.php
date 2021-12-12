@@ -13,34 +13,41 @@ Flight::route('POST /register', function(){
 
     $data = Flight::request()->data;
     $messages=array();
-    if (empty(trim($nom))) {
+
+
+    if (empty(trim($data->nom))) {
         $messages['nom'] = "Nom obligatoire";
     }
-    if (empty(trim($prenom))) 
-        $messages['prenom'] = "Prénom obligatoire";
-    if (strlen($password) < 8) 
-        $messages['password'] = "Mot de passe de 8 caractères minimum";
-    
-    if (empty(trim($password))) 
-        $messages['mdp'] = "Mot de passe obligatoire";
-    
-    if (empty(trim($email))) {
+    if (empty(trim($data->prenom))) 
+    $messages['prenom'] = "Prénom obligatoire";
+
+    if (empty(trim($data->mdp))) {
+         $messages['mdp'] = "Mot de passe obligatoire";
+    } else  if (strlen($data->password) < 8) 
+        $messages['mdp'] = "Mot de passe de 8 caractères minimum";
+
+    if (empty(trim($data->mail))) {
         $messages['mail'] = "Adresse email obligatoire";
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } else if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
         $messages['mail'] = "Adresse email non valide";
     } 
-    if(count($message)>0)
-        Flight::render("register.tpl",array( "messages"=> $message,"value" => $_POST));
-    /*}else{
-        $db=Flight::get('db')->prepare(
-            "insert into utilisateur values (:nom,:mail,:mdp,:ville,:pays)" 
-        );
-        $db->execute(array(':nom' => $nom,':mail' => $mail,':mdp' => password_hash($data-> mdp, Password_default),':ville' => $ville,':pays' => $pays ));
-        Flight::redirect("/success");
-    } */   
-
-
+    if(count($messages) <= 0){
+        $st = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
+        $st -> execute(array(
+            ':nom'=>$data->nom,
+            ':prenom'=>$data->prenom,
+            ':mail'=>$data->mail,
+            ':mdp'=>password_hash($data->mdp, PASSWORD_DEFAULT),
+            
+        )); 
     Flight::redirect("/success");
+}
+    else {
+        Flight::render("register.tpl", array(
+            'messages' => $messages,
+            'valeurs' => $_POST
+        ));
+    }
 });
 
 Flight::route('GET /login', function(){
@@ -51,6 +58,12 @@ Flight::route('GET /formulaire', function(){
     Flight::render("form_candidat.tpl",array());
 });
 
+Flight::route('POST /formulaire', function(){
+    Flight::render("form_candidat.tpl",array());
+
+    $data = Flight::request()->data;
+    $messages=array();
+});
 
 
 
