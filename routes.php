@@ -15,22 +15,27 @@ Flight::route('POST /register', function(){
     $messages=array();
 
 
-    if (empty(trim($data->nom))) {
+    if (empty(trim($data->nom))) 
         $messages['nom'] = "Nom obligatoire";
-    }
+    
     if (empty(trim($data->prenom))) 
     $messages['prenom'] = "Prénom obligatoire";
 
-    if (empty(trim($data->mdp))) {
+    if (empty(trim($data->mdp))) 
          $messages['mdp'] = "Mot de passe obligatoire";
-    } else  if (strlen($data->password) < 8) 
+    
+    if (strlen($data->mdp) <= 8)
         $messages['mdp'] = "Mot de passe de 8 caractères minimum";
+    
 
-    if (empty(trim($data->mail))) {
+    if (empty(trim($data->mail)))  
         $messages['mail'] = "Adresse email obligatoire";
-    } else if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
+    
+    if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
         $messages['mail'] = "Adresse email non valide";
     } 
+   
+   
     if(count($messages) <= 0){
         $st = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
         $st -> execute(array(
@@ -40,13 +45,14 @@ Flight::route('POST /register', function(){
             ':mdp'=>password_hash($data->mdp, PASSWORD_DEFAULT),
             
         )); 
-    Flight::redirect("/success");
-}
-    else {
+        Flight::redirect("/success");
+    }else {
         Flight::render("register.tpl", array(
             'messages' => $messages,
             'valeurs' => $_POST
+         
         ));
+       
     }
 });
 

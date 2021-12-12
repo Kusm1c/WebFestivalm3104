@@ -19,13 +19,13 @@
 
         <div>
             <label for="stacked-email">Email :</label>
-            <input type="email" id="stacked-email" name="mail" placeholder="Email"  value={$value.mail|escape|default:''}>
+            <input type="email" id="mail" name="mail" placeholder="Email"  value={$value.mail|escape|default:''}>
             <span> {$messages.mail|escape|default:''}</span>
         </div>
 
         <div>
             <label for="stacked-password">Mot de passe :</label>
-            <input type="password" id="stacked-password" name="mdp" placeholder="Mot de passe">
+            <input type="password" id="mdp" name="mdp" placeholder="Mot de passe">
             <span> {$messages.mdp|escape|default:''}</span>
         </div>
 
