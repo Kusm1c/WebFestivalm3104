@@ -6,11 +6,12 @@
 <form class="pure-form pure-form-stacked" action="envoi" enctype="multipart/form-data" method="post">
     <fieldset>
         <legend>Inscription</legend>
-
-        <label for="namegrp">Nom du groupe</label>
-        <input type="text" id="namegrp" name="nomgrp" placeholder="Nomgroupe"  value={$value.nomgrp|escape|default:''}>
+      <div>
+        <label for="nomgrp">Nom du groupe</label>
+        <input type="text" id="nomgrp" name="nomgrp" placeholder="Nom du groupe"  value={$value.nomgrp|escape|default:''}>
         <span> {$messages.nomgrp|escape|default:''}</span>
-      	 
+      </div>
+      <div>	 
       	<select>
         <option value="rien" selected="">Sélectionnez votre département</option>
 		    <option value="01">01 - AIN</option>
@@ -125,7 +126,7 @@
         <option value="998">998 - EXPATRIES ZONE 4</option>
         <option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
-      
+      </div>
       	<h2>
           Représentant du groupe
       </h2>
@@ -133,16 +134,16 @@
         <input type="text" id="name" name="name" placeholder="Nom"  value={$value.name|escape|default:''}>
         <span> {$messages.name|escape|default:''}</span>
       
-      	<label for="firstname">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" placeholder="Prenom"  value={$value.prenom|escape|default:''}>
+      	<label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Prénom"  value={$value.prenom|escape|default:''}>
         <span> {$messages.prenom|escape|default:''}</span>
       
-       	<label for="adr">Adresse :</label>
+       	<label for="adresse">Adresse :</label>
         <input type="text" id="adresse" name="adresse" placeholder="Adresse"  value={$value.adresse|escape|default:''}>
         <span> {$messages.adresse|escape|default:''}</span> 
       
       <label for="code">Code Postal :</label>
-      <input type="number" id="code" name="code" pattern="[0-9]{5}" placeholder="Codepostal" value= {$value.code|escape|default:''}>
+      <input type="number" id="code" name="code" pattern="[0-9]{5}" placeholder="Code postal" value= {$value.code|escape|default:''}>
       <span> {$messages.code|escape|default:''}</span> 
 
         <label for="stacked-email">Email :</label>
