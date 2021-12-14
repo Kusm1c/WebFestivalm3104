@@ -243,20 +243,24 @@
      
 
     <label for="mp3">3 fichiers mp3</label>
-	  <input type="file"id="mp3" name="mp3" accept=".mp3" multiple>
-     
+	  <input type="file"id="mp3" name="mp3" accept=".mp3" value={$value.mp3|escape|default:''} multiple>
+     <span> {$messages.mp3}</span>
+
     <label for="dossierpdf">Un dossier de presse PDF (facultatif)</label>
-	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf">
-      
-    <label for="photo"> 2 photos de groupe ( moins de 300 dpi)</label>
-    <input type="file"id="photo" name="photo" accept=".jpg, .jpeg, .png" multiple>
-      
+	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf" value={$value.dossierpdf|escape|default:''}>
+      <span> {$messages.dossierpdf}</span>
+
+    <label for="photo"> 2 photos de groupe (moins de 300 dpi)</label>
+    <input type="file"id="photo" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo|escape|default:''}multiple>
+      <span> {$messages.photo}</span>
+
     <label for="techniquepdf">Une fiche technique PDF</label>
-	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf">
-      
+	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf" value={$value.techniquepdf|escape|default:''}>
+      <span> {$messages.technique}</span>
+
     <label for="sacempdf">Un document SACEM PDF</label>
-	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf">
- 
+	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf|escape|default:''}>
+    <span> {$messages.sacempdf}</span>
 
   	    <button type="submit" class="pure-button pure-button-primary">Sign in</button>
     </fieldset>
