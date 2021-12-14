@@ -114,10 +114,50 @@ Flight::route('POST /formulaire', function(){
       $messages['mail'] = "Adresse email non valide";
   
     // Vérifie la validité du numéro de téléphone
-  if(!preg_match('`[0-9]{10}`',$data->phone))
+    if(!preg_match('`[0-9]{10}`',$data->phone))
         $messages['phone'] = "Numéro de téléphone non valable";
     
+     // Vérifie si l'utilisateur a saisi un style musical
+     if (empty(trim($data->style))) {
+        $messages['style'] = "Veuillez indiquer un style musical";
+    }
 
+    // Vérifie si l'utilisateur a saisi une année de création
+    if (empty(trim($data->annee))) {
+        $messages['annee'] = "Veuillez indiquer l'année de création du groupe";
+    }
+    // Vérifie si la date saisie est comprise entre 1800 et 2021
+    if((($data->annee) < '1800')||(($data->annee) > '2021')){
+        $messages['annee'] = "Date de saisie invalide";
+    }
+
+      // Vérifie si l'utilisateur a saisi quelquechose dans la zone de texte Présentation
+      if (empty(trim($data->presentation))) {
+        $messages['presentation'] = "Veuillez écrire quelques lignes pour vous présenter";
+    }
+
+    // Vérifie si l'utilisateur a saisi quelquechose dans la zone de texte : expériences scéniques
+    if (empty(trim($data->experience))) 
+        $messages['experience'] = "Veuillez écrire quelques lignes sur vos expériences scéniques";
+
+    
+    // Vérifie si l'utilisateur a saisi quelquechose dans la zone de texte : expériences scéniques
+    if (empty(trim($data->urlsite))) 
+        $messages['urlsite'] = "Veuillez saisir un url vers votre site web ou votre page facebook";
+
+    // Vérifie la validité de l'url saisi pour le site web ou page facebook    
+    if (!filter_var($data->urlsite, FILTER_VALIDATE_URL)) 
+            $messages['urlsite'] = "URL non valide";
+    
+     // Vérifie la validité de l'url saisi pour l'adresse page soundcloud
+     if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL)) 
+        $messages['urlsoundcloud'] = "URL non valide";
+
+    // Vérifie la validité de l'url saisi pour l'adresse page youtube
+    if (!filter_var($data->urlyoutube, FILTER_VALIDATE_URL)) 
+        $messages['urlyoutube'] = "URL non valide";
+
+    //A gérer => les membres du groupe(1 à 8)
 
 });
 
