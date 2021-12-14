@@ -75,6 +75,7 @@ Flight::route('POST /formulaire', function(){
     Flight::render("form_candidat.tpl",array());
 
     $data = Flight::request()->data;
+    $files= Flight::request()->files;
     $messages=array();
 
      // Vérifie si l'utilisateur a saisi un nom de groupe
@@ -159,6 +160,111 @@ Flight::route('POST /formulaire', function(){
 
     //A gérer => les membres du groupe(1 à 8)
 
+    // Vérifier la validité de l'extension .mp3 des fichiers mp3
+    if(!preg_match('/\.(mp3)$/',$_FILES['mp3']['name'])){
+        unset($_FILES['mp3']) ; //supprime le fichier directement (sécurité)
+        $messages['mp3'] = "Fichier non valide";
+    } 
+    // Test si l'utilsateur a rentré 3 (pas sûr, peut être qu'1) fichiers mp3
+    if (!isset($_FILES['mp3']))
+        $messages['mp3'] = "Veuillez saisir un fichier";
+    
+    // Test pour traiter les erreur lors de l'envoi des mp3
+    if ($_FILES['mp3']['error'] != 0)
+        $messages['mp3'] = "Erreur veuillez réessayer";
+
+    // Vérifier la validité de l'extension .pdf des fichiers dossierpdf
+    if(!preg_match('/\.(pdf)$/',$_FILES['dossierpdf']['name'])){
+        unset($_FILES['dossierpdf']) ;
+        $messages['dossierpdf'] = "Fichier non valide";
+    } 
+
+    // Test pour traiter les erreur lors de l'envoi du pdf
+    if ($_FILES['dossierpdf']['error'] != 0)
+        $messages['dossierpdf'] = "Erreur veuillez réessayer";
+
+    // Vérifier la validité de l'extension .jpg .jpeg ou png des fichiers photos
+    if(!preg_match('/\.(jpg|jpeg|png)$/',$_FILES['photo']['name'])){
+        unset($_FILES['photo']) ;
+        $messages['photo'] = "Fichier non valide";
+    } 
+
+    // Test si l'utilsateur a rentré 2 (pas sûr, peut être qu'1) fichiers photo
+    if (!isset($_FILES['photo']))
+        $messages['photo'] = "Veuillez saisir un fichier";
+    
+    // Test pour traiter les erreur lors de l'envoi des photos
+    if ($_FILES['photo']['error'] != 0)
+        $messages['photo'] = "Erreur veuillez réessayer";
+
+    // Test si fichiers photos pas trop grand
+    if ($_FILES['photo']['size'] <= 5240000)// en octets
+        $messages['photo'] = "fichier trop volumineux";
+
+       
+
+    // Vérifier la validité de l'extension .pdf des fichiers techniques
+    if(!preg_match('/\.(pdf)$/',$_FILES['techniquepdf']['name'])){
+        unset($_FILES['techniquepdf']) ;
+        $messages['techniquepdf'] = "Fichier non valide";
+    } 
+
+     // Test si l'utilsateur a rentré un fichier technique
+     if (!isset($_FILES['techniquepdf']))
+        $messages['techniquepdf'] = "Veuillez saisir un fichier";
+ 
+    // Test pour traiter les erreur lors de l'envoi du fichier technique
+    if ($_FILES['techniquepdf']['error'] != 0)
+        $messages['techniquepdf'] = "Erreur veuillez réessayer";
+
+    // Vérifier la validité de l'extension .pdf des fichiers SACEM
+      if(!preg_match('/\.(pdf)$/',$_FILES['sacempdf']['name'])){
+        unset($_FILES['sacempdf']) ;
+        $messages['sacempdf'] = "Fichier non valide";
+    } 
+
+     // Test si l'utilsateur a rentré un fichier SACEM
+     if (!isset($_FILES['sacempdf']))
+        $messages['sacempdf'] = "Veuillez saisir un fichier";
+ 
+    // Test pour traiter les erreur lors de l'envoi du fichier SACEM
+    if ($_FILES['sacempdf']['error'] != 0)
+        $messages['sacempdf'] = "Erreur veuillez réessayer";
+
+        if(count($messages) <= 0){
+            $st = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:isnot_assoc,:is_sacem,:isnot_sacem,:is_prod,:isnot_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf)");
+            $st -> execute(array(':nomgrp'=>$data->nomgrp,
+                                ':dep'=>$data->dep,
+                                ':style'=>$data->style,
+                                ':annee'=>$data->annee,
+                                ':presentation'=>$data->presentation,
+                                ':experience'=>$data->experience,
+                                ':urlsite'=>$data->urlsite,
+                                ':urlsoundcloud'=>$data->urlsoundcloud,
+                                ':urlyoutube'=>$data->urlyoutube,
+                                ':is_assoc'=>$data->is_assoc,
+                                ':isnot_assoc'=>$data->isnot_assoc,
+                                ':is_sacem'=>$data->is_sacem,
+                                ':isnot_sacem'=>$data->isnot_sacem,
+                                ':is_prod'=>$data->is_prod,
+                                ':isnot_prod'=>$data->isnot_prod,
+                                ':mp3'=>$data->mp3,
+                                ':dossierpdf'=>$data->dossierpdf,
+                                ':photo'=>$data->photo,
+                                ':techniquepdf'=>$data->techniquepdf,
+                                ':sacempdf'=>$data->sacempdf,
+                                ));
+            //redirige vers la page  success
+            Flight::redirect("/success");
+            // sinon retour sur la page register et affichage des messages d'erreurs
+        }else {
+            Flight::render("register.tpl", array(
+                'messages' => $messages,
+                'valeurs' => $_POST
+             
+            ));
+           
+        }
 });
 
 
