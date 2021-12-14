@@ -171,20 +171,20 @@
       maxlength="500" size="10" value= {$value.presentation|escape|default:''}>
 	    <span> {$messages.presentation|escape|default:''}</span>
       
-      <label for="exprience">Expériences scéniques :</label>
+      <label for="experience">Expériences scéniques :</label>
       <textarea   rows="5" cols="33"  ></textarea>
       <input type="text" id="experience" name="experience" placeholder="Maximum 5OO          caractères" 
       maxlength="500" size="10" value= {$value.experience|escape|default:''}>
 	    <span> {$messages.experience|escape|default:''}</span>
       
-      <label for="url">Site web ou page facebook :</label>
+      <label for="urlsite">Site web ou page facebook :</label>
 	    <input type="url" name="urlsite" id="urlsite"
        placeholder="https://groupedemusique.com"
        pattern="https://.*" size="15" value={$value.urlsite|escape|default:''}
        required >
       <span> {$messages.urlsite|escape|default:''}</span>
       
-      <label for="url">Adresse page soundcloud (facultatif)</label>
+      <label for="urlsoundcloud">Adresse page soundcloud (facultatif)</label>
 	    <input type="url" name="urlsoundcloud" id="urlsoundcloud"
        placeholder="https://soundcloud.com"
        pattern="https://.*" size="15" value={$value.urlsoundcloud|escape|default:''}
@@ -192,7 +192,7 @@
   	   <span> {$messages.urlsoundcloud|escape|default:''}</span>
        
       
-      <label for="url">Adresse page youtube (facultatif)</label>
+      <label for="urlyoutube">Adresse page youtube (facultatif)</label>
 	    <input type="url" name="urlyoutube" id="urlyoutube"
        placeholder="https://youtube.com"
        pattern="https://.*" size="15" value={$value.urlyoutube|escape|default:''}
@@ -205,13 +205,12 @@
       <p>Statut assiociatif :</p>
 
       <div>
-        <input type="checkbox" id="is_assoc" name="is_assoc"
-               checked>
+        <input type="radio" id="is_assoc" name="assoc" value="is_assoc" checked>
         <label for="is_assoc">oui</label>
       </div>
 
       <div>
-        <input type="checkbox" id="isnot_assoc" name="isnot_assoc">
+        <input type="radio" id="isnot_assoc" name="assoc" value="isnot_assoc">
         <label for="isnot_assoc">non</label>
       </div>
       
@@ -219,13 +218,12 @@
       <p>Inscrit à la SACEM :</p>
 
       <div>
-        <input type="checkbox" id="is_sacem" name="is_sacem"
-               checked>
+        <input type="radio" id="is_sacem" name="sacem" value="is_sacem" checked>
         <label for="is_sacem">oui</label>
       </div>
 
       <div>
-        <input type="checkbox" id="isnot_sacem" name="isnot_sacem">
+        <input type="radio" id="isnot_sacem" name="sacem" value="isnot_sacem">
         <label for="isnot_sacem">non</label>
       </div>
       
@@ -233,13 +231,12 @@
         <p>Producteur :</p>
 
       <div>
-        <input type="checkbox" id="is_prod" name="is_prod"
-               checked>
+        <input type="radio" id="is_prod" name="prod" value="is_prod" checked>
         <label for="is_prod">oui</label>
       </div>
 
       <div>
-        <input type="checkbox" id="isnot_prod" name="isnot_prod">
+        <input type="radio" id="isnot_prod" name="prod" value="isnot_prod">
         <label for="isnot_prod">non</label>
       </div>
       
