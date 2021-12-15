@@ -20,7 +20,7 @@ Flight::route('POST /register', function(){
     
     // Vérifie si l'utilisateur a saisi un prénom
     if (empty(trim($data->prenom))) 
-    $messages['prenom'] = "Prénom obligatoire";
+        $messages['prenom'] = "Prénom obligatoire";
 
 
     // Vérifie si l'utilisateur a saisi un mot de passe
@@ -94,13 +94,14 @@ Flight::route('POST /formulaire', function(){
     Flight::render("form_candidat.tpl",array());
 
     $data = Flight::request()->data;
-    $files= Flight::request()->files;
+    $_FILES= Flight::request()->files;
     $messages=array();
 
      // Vérifie si l'utilisateur a saisi un nom de groupe
     if (empty(trim($data->nomgrp))) 
-    $messages['nomgrp'] = "Nom de groupe obligatoire";
+        $messages['nomgrp'] = "Nom de groupe obligatoire";
 
+  
     //Vérifie si l'utilsateur a choisi un département 
     if(!isset($data->dpt))
         $messages['dpt']="Veuillez sélectionner votre département"; 
@@ -132,7 +133,7 @@ Flight::route('POST /formulaire', function(){
       $messages['mail'] = "Adresse email obligatoire";
    
     // Vérifie si l'utilisateur a saisi un mail valide
-  if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) 
+    if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) 
       $messages['mail'] = "Adresse email non valide";
   
     // Vérifie la validité du numéro de téléphone
@@ -169,7 +170,7 @@ Flight::route('POST /formulaire', function(){
 
     // Vérifie la validité de l'url saisi pour le site web ou page facebook    
     if (!filter_var($data->urlsite, FILTER_VALIDATE_URL)) 
-            $messages['urlsite'] = "URL non valide";
+        $messages['urlsite'] = "URL non valide";
     
      // Vérifie la validité de l'url saisi pour l'adresse page soundcloud
      if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL)) 
@@ -291,13 +292,14 @@ Flight::route('POST /formulaire', function(){
             Flight::redirect("/success");
             // sinon retour sur la page register et affichage des messages d'erreurs
         }else {
-            Flight::render("register.tpl", array(
+            Flight::render("form_candidat.tpl", array(
                 'messages' => $messages,
                 'valeurs' => $_POST
              
             ));
            
         }
+    
 });
 
 

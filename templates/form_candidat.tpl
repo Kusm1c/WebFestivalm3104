@@ -11,9 +11,10 @@
         <input type="text" id="nomgrp" name="nomgrp" placeholder="Nom du groupe"  value={$value.nomgrp|escape|default:''}>
         <span> {$messages.nomgrp|escape|default:''}</span>
       </div>
-      <div>
-      	<label for="departement-select">Sélectionnez votre département<\label>
-      	<select name="dpt" id="département">
+
+	        <div>
+		 <label for="dpt">Sélectionnez votre département</label>
+      	<select name="dpt" id="dpt">
         	<option value="rien" selected="">Sélectionnez votre département</option>
 			<option value="01">01 - AIN</option>
        		<option value="02">02 - AISNE</option>
@@ -127,12 +128,13 @@
 		<option value="998">998 - EXPATRIES ZONE 4</option>
 		<option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
-		<span> {$messages.dpt}</span>
+		<span> {$messages.dpt|escape|default:''}</span>
       </div>
-      	<h2>
+
+	       	<h2>
           Représentant du groupe
       </h2>
-   <label for="name">Nom :</label>
+   		<label for="name">Nom :</label>
         <input type="text" id="name" name="name" placeholder="Nom"  value={$value.name|escape|default:''}>
         <span> {$messages.name|escape|default:''}</span>
       
@@ -153,7 +155,7 @@
         <span> {$messages.mail|escape|default:''}</span>
 
       <label for="phone">téléphone:</label>
-	    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Telephone"value={$value.phone|escape|default:''} required>
+	    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Telephone"value={$value.phone|escape|default:''} >
       <span> {$messages.phone|escape|default:''}</span>
       
       
@@ -163,44 +165,45 @@
       
       
       <label for="annee">Année de création :</label>
-      <input type="number" id="annee" name="annee"  placeholder="AnneeCreation"  min="1800" max="2021" value= {$value.annee|escape|default:''}>
+      <input type="number" id="annee" name="annee"  placeholder="Année"  min="1800" max="2021" value= {$value.annee|escape|default:''}>
       <span> {$messages.annee|escape|default:''}</span>
       
-      
-      <label for="presentation">Presentation :</label>
-      <textarea   rows="5" cols="33"  ></textarea>
-      <input type="text" id="presentation" name="presentation" placeholder="Maximum 5OO caractères" 
-      maxlength="500" size="10" value= {$value.presentation|escape|default:''}>
-	    <span> {$messages.presentation|escape|default:''}</span>
-      
-      <label for="experience">Expériences scéniques :</label>
-      <textarea   rows="5" cols="33"  ></textarea>
-      <input type="text" id="experience" name="experience" placeholder="Maximum 5OO          caractères" 
-      maxlength="500" size="10" value= {$value.experience|escape|default:''}>
-	    <span> {$messages.experience|escape|default:''}</span>
-      
-      <label for="urlsite">Site web ou page facebook :</label>
+      <div>
+      <label for="presentation">Presentation (Maximum 5OO caractères)  :</label>
+      <textarea   rows="5" cols="33" type="text" id="presentation" name="presentation" 
+      maxlength="500" size="10" value= {$value.presentation|escape|default:''}  >
+	  </textarea>
+   	  <span> {$messages.presentation|escape|default:''}</span>
+	</div>
+
+	<div>
+	   <label for="experience">Expériences scéniques (Maximum 5OO caractères) :</label>
+      <textarea   rows="5" cols="33"  type="text" id="experience" name="experience"
+      maxlength="500" size="10" value= {$value.experience|escape|default:''} >
+	  </textarea>
+   	  <span> {$messages.experience|escape|default:''}</span>
+	</div>
+
+	  <label for="urlsite">Site web ou page facebook :</label>
 	    <input type="url" name="urlsite" id="urlsite"
        placeholder="https://groupedemusique.com"
-       pattern="https://.*" size="15" value={$value.urlsite|escape|default:''}
-       required >
+       pattern="https://.*" size="15" value={$value.urlsite|escape|default:''} >
       <span> {$messages.urlsite|escape|default:''}</span>
-      
-      <label for="urlsoundcloud">Adresse page soundcloud (facultatif)</label>
+
+	    <label for="urlsoundcloud">Adresse page soundcloud (facultatif)</label>
 	  <input type="url" name="urlsoundcloud" id="urlsoundcloud"
        placeholder="https://soundcloud.com"
-       pattern="https://.*" size="15" value={$value.urlsoundcloud|escape|default:''}
-       required >
+       pattern="https://.*" size="15" value={$value.urlsoundcloud|escape|default:''}>
   	   <span> {$messages.urlsoundcloud|escape|default:''}</span>
-       
-      
-      <label for="urlyoutube">Adresse page youtube (facultatif)</label>
+
+
+		<label for="urlyoutube">Adresse page youtube (facultatif)</label>
 	    <input type="url" name="urlyoutube" id="urlyoutube"
        placeholder="https://youtube.com"
-       pattern="https://.*" size="15" value={$value.urlyoutube|escape|default:''}
-       required >
+       pattern="https://.*" size="15" value={$value.urlyoutube|escape|default:''}>
   	   <span> {$messages.urlyoutube|escape|default:''}</span>
-      
+
+	      
       <label for="url">Membres du groupe(maximum 8)</label>
 	  	<div>
 		<h3> Membre 1 :</h3>
@@ -208,6 +211,9 @@
         <input type="text" id="mbr1" name="mbr1" placeholder=" Nom Prénom (instrument)"  value={$value.mbr1|escape|default:''}>
         <span> {$messages.mbr1|escape|default:''}</span>
       	</div>
+
+		 
+   
 		
 		<div>
 		<h3> Membre 2 :</h3>
@@ -257,17 +263,20 @@
         <input type="text" id="mbr8" name="mbr8" placeholder=" Nom Prénom (instrument)"  value={$value.mbr8|escape|default:''}>
         <span> {$messages.mbr8|escape|default:''}</span>
       	</div>
-      <p>Statut assiociatif :</p>
+
+		   <p>Statut assiociatif :</p>
 
       <div>
         <input type="radio" id="is_assoc" name="assoc" value="is_assoc" checked>
         <label for="is_assoc">oui</label>
       </div>
 
-      <div>
+	   <div>
         <input type="radio" id="isnot_assoc" name="assoc" value="isnot_assoc">
         <label for="isnot_assoc">non</label>
       </div>
+
+	       
       
       
       <p>Inscrit à la SACEM :</p>
@@ -294,48 +303,53 @@
         <input type="radio" id="isnot_prod" name="prod" value="isnot_prod">
         <label for="isnot_prod">non</label>
       </div>
-      
-     
+
+	       
 	<h4> 3 Fichiers mp3 </h4>
     <label for="mp3_1">Premier fichier mp3</label>
-	<input type="file"id="mp3_1" name="mp3_1" accept=".mp3" value={$value.mp3_1} >
-     <span> {$messages.mp3}</span>
+	<input type="file"id="mp3_1" name="mp3_1" accept=".mp3">
+    <span> {$messages.mp3_1|escape|default:''}</span>
 
-	 
-    <label for="mp3_2">Deuxième fichier mp3</label>
-	<input type="file"id="mp3_2" name="mp3_2" accept=".mp3" value={$value.mp3_2} >
-    <span> {$messages.mp3_2}</span>
+	    <label for="mp3_2">Deuxième fichier mp3</label>
+	<input type="file"id="mp3_2" name="mp3_2" accept=".mp3" >
+    <span> {$messages.mp3_2|escape|default:''}</span>
 
 	<label for="mp3_3">Troisième fichier mp3</label>
-	<input type="file"id="mp3_3" name="mp3_3" accept=".mp3" value={$value.mp3_3} >
-    <span> {$messages.mp3_3}</span>
+	<input type="file"id="mp3_3" name="mp3_3" accept=".mp3" >
+    <span> {$messages.mp3_3|escape|default:''}</span>
 
     <label for="dossierpdf">Un dossier de presse PDF (facultatif)</label>
-	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf" value={$value.dossierpdf}>
-      <span> {$messages.dossierpdf}</span>
+	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf">
+      <span> {$messages.dossierpdf|escape|default:''}</span>
 
 	<h4>  2 photos de groupe (moins de 300 dpi) </h4>
     <label for="photo"> photo 1</label>
-    <input type="file"id="photo_1" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo_1}multiple>
-    <span> {$messages.photo_1}</span>
+    <input type="file"id="photo_1" name="photo" accept=".jpg, .jpeg, .png" >
+    <span> {$messages.photo_1|escape|default:''}</span>
 
 	<label for="photo"> photo 2</label>
-    <input type="file"id="photo_2" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo_2}multiple>
-    <span> {$messages.photo_2}</span>
+    <input type="file"id="photo_2" name="photo" accept=".jpg, .jpeg, .png" >
+    <span> {$messages.photo_2|escape|default:''}</span>
 
     <label for="techniquepdf">Une fiche technique PDF</label>
-	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf" value={$value.techniquepdf}>
-      <span> {$messages.technique}</span>
+	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf" >
+      <span> {$messages.technique|escape|default:''}</span>
 
     <label for="sacempdf">Un document SACEM PDF</label>
-	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf}>
-    <span> {$messages.sacempdf}</span>
+	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf">
+    <span> {$messages.sacempdf|escape|default:''}</span>
     
-    <label for="scene">Scene :</label>
-    <input type="text" id="scene" name="scene"  placeholder="scene" value= {$value.scene}>
-    <span> {$messages.scene}</span>
+	<div>
+    <label for="scene :">Sélectionnez votre scène :</label>
+    <select name="scene" id="scene">
+		<option value="Tribute">Tribute</option>
+       	<option value="Acoustique">Acoustique</option>
+        <option value="Amplifié/Rock">Amplifié/Rock</option>
+	</select>
+	<span> {$messages.scene|escape|default:''}</span>
+      </div>
 
-  	    <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+  	<button type="submit" class="pure-button pure-button-primary">Sign in</button>
     </fieldset>
 </form>
 </div>
