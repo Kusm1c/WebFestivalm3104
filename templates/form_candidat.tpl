@@ -261,6 +261,10 @@
     <label for="sacempdf">Un document SACEM PDF</label>
 	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf|escape|default:''}>
     <span> {$messages.sacempdf}</span>
+    
+    <label for="style">Scene :</label>
+    <input type="text" id="scene" name="scene"  placeholder="scene" value= {$value.scene|escape|default:''}>
+    <span> {$messages.scene|escape|default:''}</span>
 
   	    <button type="submit" class="pure-button pure-button-primary">Sign in</button>
     </fieldset>
