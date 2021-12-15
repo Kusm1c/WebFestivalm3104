@@ -262,7 +262,7 @@
 	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf|escape|default:''}>
     <span> {$messages.sacempdf}</span>
     
-    <label for="style">Scene :</label>
+    <label for="scene">Scene :</label>
     <input type="text" id="scene" name="scene"  placeholder="scene" value= {$value.scene|escape|default:''}>
     <span> {$messages.scene|escape|default:''}</span>
 
