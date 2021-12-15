@@ -13,8 +13,8 @@
       </div>
       <div>	 
       	<select>
-        <option value="rien" selected="">Sélectionnez votre département</option>
-		    <option value="01">01 - AIN</option>
+        <option value="rien" name="dpt" selected="">Sélectionnez votre département</option>
+	<option value="01">01 - AIN</option>
         <option value="02">02 - AISNE</option>
         <option value="03">03 - ALLIER</option>
         <option value="04">04 - ALPES DE HAUTE PROVENCE</option>
