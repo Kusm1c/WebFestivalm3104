@@ -101,7 +101,9 @@ Flight::route('POST /formulaire', function(){
     if (empty(trim($data->nomgrp))) 
     $messages['nomgrp'] = "Nom de groupe obligatoire";
 
-    //Menu déroulant région à gérer
+    //Vérifie si l'utilsateur a choisi un département 
+    if(!isset($data->dpt))
+        $messages['dpt']="Veuillez sélectionner votre département"; 
 
 
      // Vérifie si l'utilisateur a saisi un nom
@@ -253,7 +255,7 @@ Flight::route('POST /formulaire', function(){
         if(count($messages) <= 0){
             $st = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:isnot_assoc,:is_sacem,:isnot_sacem,:is_prod,:isnot_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf)");
             $st -> execute(array(':nomgrp'=>$data->nomgrp,
-                                ':dep'=>$data->dep,
+                                ':ep'=>$data->dep,
                                 ':style'=>$data->style,
                                 ':annee'=>$data->annee,
                                 ':presentation'=>$data->presentation,

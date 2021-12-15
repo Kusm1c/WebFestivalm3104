@@ -15,7 +15,7 @@
       	<label for="departement-select">Sélectionnez votre département<\label>
       	<select name="dpt" id="département">
         	<option value="rien" selected="">Sélectionnez votre département</option>
-		<option value="01">01 - AIN</option>
+			<option value="01">01 - AIN</option>
        		<option value="02">02 - AISNE</option>
         	<option value="03">03 - ALLIER</option>
         	<option value="04">04 - ALPES DE HAUTE PROVENCE</option>
@@ -127,6 +127,7 @@
 		<option value="998">998 - EXPATRIES ZONE 4</option>
 		<option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
+		<span> {$messages.dpt}</span>
       </div>
       	<h2>
           Représentant du groupe
