@@ -39,16 +39,35 @@ Flight::route('POST /register', function(){
     if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
         $messages['mail'] = "Adresse email non valide";
     } 
+    
+    // Vérifie si l'utilisateur a saisi un code postal
+    if (empty(trim($data->codePostal))) 
+        $messages['codePostal'] = "Code Postal obligatoire";
+   
+    // Vérifie la validité du code postal
+    if (!preg_match("~^[0-9]{5}$~",$data->code))
+        $messages['code'] = "Code postal invalide";
+    
+    // Vérifie si l'utilisateur a saisi un numero de telephone
+    if (strlen($data->telephone) === 10)
+        $messages['telephone'] = "Numero de telephone à 10 chiffres";
+
+    // Vérifie si l'utilisateur a saisi un numero de telephone
+    if (empty(trim($data->telephone))) 
+        $messages['telephone'] = "Numero de telephone obligatoire";
    
    // SI nous avons aucun messages d'erreurs alors envoyer les données dans la BDD
-    if(count($messages) <= 0){
+   if(count($messages) <= 0){
         $st = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
         $st -> execute(array(
             ':nom'=>$data->nom,
             ':prenom'=>$data->prenom,
+            ':addresse'=>$data->addresse,
+            'codePostal'=>$data->codePostal,
             ':mail'=>$data->mail,
+            ':telephone'=>$data->telephone,
             ':mdp'=>password_hash($data->mdp, PASSWORD_DEFAULT),
-            
+             
         )); 
         //redirige vers la page  success
         Flight::redirect("/success");
@@ -252,8 +271,14 @@ Flight::route('POST /formulaire', function(){
                                 ':dossierpdf'=>$data->dossierpdf,
                                 ':photo'=>$data->photo,
                                 ':techniquepdf'=>$data->techniquepdf,
-                                ':sacempdf'=>$data->sacempdf,
+                                ':sacempdf'=>$data->sacempdf
                                 ));
+            
+            $st = Flight::get('pdo')->prepare("INSERT INTO département VALUES(:département)");
+            $st -> execute(array(':département'=>$data->dpt));
+
+            $st = Flight::get('pdo')->prepare("INSERT INTO scene VALUES(:scene)");
+            $st -> execute(array(':scene'=>$data->scene));
             //redirige vers la page  success
             Flight::redirect("/success");
             // sinon retour sur la page register et affichage des messages d'erreurs
