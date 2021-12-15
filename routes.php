@@ -179,8 +179,6 @@ Flight::route('POST /formulaire', function(){
     if (!filter_var($data->urlyoutube, FILTER_VALIDATE_URL)) 
         $messages['urlyoutube'] = "URL non valide";
 
-    //A gérer => les membres du groupe(1 à 8)
-
     // Vérifier la validité de l'extension .mp3 des fichiers mp3
     if(!preg_match('/\.(mp3)$/',$_FILES['mp3']['name'])){
         unset($_FILES['mp3']) ; //supprime le fichier directement (sécurité)
@@ -251,7 +249,8 @@ Flight::route('POST /formulaire', function(){
     // Test pour traiter les erreur lors de l'envoi du fichier SACEM
     if ($_FILES['sacempdf']['error'] != 0)
         $messages['sacempdf'] = "Erreur veuillez réessayer";
-       
+    
+    // Variable contenant l'ensemble des données des membres
     $mbrtot = $data->mbr1. " " .$data->mbr2. " " .$data->mbr3. " " .$data->mbr4. " " .$data->mbr5. " " .$data->mbr6. " " .$data->mbr7. " " .$data->mbr8;
 
     // Vérifie si l'utilisateur a saisi un membre

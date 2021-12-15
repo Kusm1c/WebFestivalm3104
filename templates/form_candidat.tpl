@@ -187,7 +187,7 @@
       <span> {$messages.urlsite|escape|default:''}</span>
       
       <label for="urlsoundcloud">Adresse page soundcloud (facultatif)</label>
-	    <input type="url" name="urlsoundcloud" id="urlsoundcloud"
+	  <input type="url" name="urlsoundcloud" id="urlsoundcloud"
        placeholder="https://soundcloud.com"
        pattern="https://.*" size="15" value={$value.urlsoundcloud|escape|default:''}
        required >
@@ -296,30 +296,44 @@
       </div>
       
      
-
-    <label for="mp3">3 fichiers mp3</label>
-	  <input type="file"id="mp3" name="mp3" accept=".mp3" value={$value.mp3|escape|default:''} multiple>
+	<h4> 3 Fichiers mp3 </h4>
+    <label for="mp3_1">Premier fichier mp3</label>
+	<input type="file"id="mp3_1" name="mp3_1" accept=".mp3" value={$value.mp3_1} >
      <span> {$messages.mp3}</span>
 
+	 
+    <label for="mp3_2">Deuxième fichier mp3</label>
+	<input type="file"id="mp3_2" name="mp3_2" accept=".mp3" value={$value.mp3_2} >
+    <span> {$messages.mp3_2}</span>
+
+	<label for="mp3_3">Troisième fichier mp3</label>
+	<input type="file"id="mp3_3" name="mp3_3" accept=".mp3" value={$value.mp3_3} >
+    <span> {$messages.mp3_3}</span>
+
     <label for="dossierpdf">Un dossier de presse PDF (facultatif)</label>
-	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf" value={$value.dossierpdf|escape|default:''}>
+	  <input type="file"id="dossierpdf" name="dossierpdf" accept=".pdf" value={$value.dossierpdf}>
       <span> {$messages.dossierpdf}</span>
 
-    <label for="photo"> 2 photos de groupe (moins de 300 dpi)</label>
-    <input type="file"id="photo" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo|escape|default:''}multiple>
-      <span> {$messages.photo}</span>
+	<h4>  2 photos de groupe (moins de 300 dpi) </h4>
+    <label for="photo"> photo 1</label>
+    <input type="file"id="photo_1" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo_1}multiple>
+    <span> {$messages.photo_1}</span>
+
+	<label for="photo"> photo 2</label>
+    <input type="file"id="photo_2" name="photo" accept=".jpg, .jpeg, .png" value={$value.photo_2}multiple>
+    <span> {$messages.photo_2}</span>
 
     <label for="techniquepdf">Une fiche technique PDF</label>
-	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf" value={$value.techniquepdf|escape|default:''}>
+	  <input type="file"id="techniquepdf" name="techniquepdf" accept=".pdf" value={$value.techniquepdf}>
       <span> {$messages.technique}</span>
 
     <label for="sacempdf">Un document SACEM PDF</label>
-	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf|escape|default:''}>
+	  <input type="file"id="sacempdf" name="sacempdf" accept=".pdf" value={$value.sacempdf}>
     <span> {$messages.sacempdf}</span>
     
     <label for="scene">Scene :</label>
-    <input type="text" id="scene" name="scene"  placeholder="scene" value= {$value.scene|escape|default:''}>
-    <span> {$messages.scene|escape|default:''}</span>
+    <input type="text" id="scene" name="scene"  placeholder="scene" value= {$value.scene}>
+    <span> {$messages.scene}</span>
 
   	    <button type="submit" class="pure-button pure-button-primary">Sign in</button>
     </fieldset>
