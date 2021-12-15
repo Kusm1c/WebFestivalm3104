@@ -201,9 +201,62 @@
        required >
   	   <span> {$messages.urlyoutube|escape|default:''}</span>
       
-      <label for="url">Membres du groupe(1 à 8)</label>
+      <label for="url">Membres du groupe(maximum 8)</label>
+	  	<div>
+		<h3> Membre 1 :</h3>
+	   	<label for="mbr1">Nom :</label>
+        <input type="text" id="mbr1" name="mbr1" placeholder=" Nom Prénom (instrument)"  value={$value.mbr1|escape|default:''}>
+        <span> {$messages.mbr1|escape|default:''}</span>
+      	</div>
+		
+		<div>
+		<h3> Membre 2 :</h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr2" name="mbr2" placeholder=" Nom Prénom (instrument)"  value={$value.mbr2|escape|default:''}>
+        <span> {$messages.mbr2|escape|default:''}</span>
+      	</div>
+
+		<div>
+		<h3> Membre 3 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr3" name="mbr3" placeholder=" Nom Prénom (instrument)"  value={$value.mbr3|escape|default:''}>
+        <span> {$messages.mbr3|escape|default:''}</span>
+      	</div>
       
-      
+	  	<div>
+		<h3> Membre 4 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr4" name="mbr4" placeholder=" Nom Prénom (instrument)"  value={$value.mbr4|escape|default:''}>
+        <span> {$messages.mbr4|escape|default:''}</span>
+      	</div>
+
+		<div>
+		<h3> Membre 5 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr5" name="mbr5" placeholder=" Nom Prénom (instrument)"  value={$value.mbr5|escape|default:''}>
+        <span> {$messages.mbr5|escape|default:''}</span>
+      	</div>
+
+		<div>
+		<h3> Membre 6 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr6" name="mbr6" placeholder=" Nom Prénom (instrument)"  value={$value.mbr6|escape|default:''}>
+        <span> {$messages.mbr6|escape|default:''}</span>
+      	</div>
+
+		<div>
+		<h3> Membre 7 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr7" name="mbr7" placeholder=" Nom Prénom (instrument)"  value={$value.mbr7|escape|default:''}>
+        <span> {$messages.mbr7|escape|default:''}</span>
+      	</div>
+
+		<div>
+		<h3> Membre 8 : </h3>
+	   	<label for="mbr2">Nom :</label>
+        <input type="text" id="mbr8" name="mbr8" placeholder=" Nom Prénom (instrument)"  value={$value.mbr8|escape|default:''}>
+        <span> {$messages.mbr8|escape|default:''}</span>
+      	</div>
       <p>Statut assiociatif :</p>
 
       <div>
