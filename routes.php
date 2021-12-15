@@ -251,9 +251,15 @@ Flight::route('POST /formulaire', function(){
     // Test pour traiter les erreur lors de l'envoi du fichier SACEM
     if ($_FILES['sacempdf']['error'] != 0)
         $messages['sacempdf'] = "Erreur veuillez réessayer";
+       
+    $mbrtot = $data->mbr1. " " .$data->mbr2. " " .$data->mbr3. " " .$data->mbr4. " " .$data->mbr5. " " .$data->mbr6. " " .$data->mbr7. " " .$data->mbr8;
+
+    // Vérifie si l'utilisateur a saisi un membre
+    if (empty(trim($mbrtot)))  
+        $messages['mrembre'] = "Au moins 1 membre requis (vous)";
 
         if(count($messages) <= 0){
-            $st = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:isnot_assoc,:is_sacem,:isnot_sacem,:is_prod,:isnot_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf)");
+            $st = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:isnot_assoc,:is_sacem,:isnot_sacem,:is_prod,:isnot_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf,:membres)");
             $st -> execute(array(':nomgrp'=>$data->nomgrp,
                                 ':ep'=>$data->dep,
                                 ':style'=>$data->style,
@@ -273,7 +279,8 @@ Flight::route('POST /formulaire', function(){
                                 ':dossierpdf'=>$data->dossierpdf,
                                 ':photo'=>$data->photo,
                                 ':techniquepdf'=>$data->techniquepdf,
-                                ':sacempdf'=>$data->sacempdf
+                                ':sacempdf'=>$data->sacempdf,
+                                ':membres'=>$mbrtot
                                 ));
             
             $st = Flight::get('pdo')->prepare("INSERT INTO département VALUES(:département)");
