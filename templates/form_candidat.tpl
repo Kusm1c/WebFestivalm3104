@@ -127,7 +127,7 @@
 		<option value="998">998 - EXPATRIES ZONE 4</option>
 		<option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
-		<span> {$messages.dpt}</span>
+		<span> {$messages.dpt|escape|default:''}</span>
       </div>
       	<h2>
           Représentant du groupe
