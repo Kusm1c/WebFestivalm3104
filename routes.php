@@ -302,6 +302,60 @@ Flight::route('POST /formulaire', function(){
     
 });
 
+Flight::route('POST /login', function () {
+    $data = Flight::request()->data;
+    $bd = Flight::get('pdo')->prepare("select Nom,email,Mdp from utilisateur where utilisateur.email like :recherche");
+    $email = $data->courriel;
+    $pass = $data->psw;
+
+    $message = array();
+
+    // Vérification des valeurs de login en les comparant à la base de données
+    // bd prend le nom l'email et le mot de passe de la table utilisateur quand l'email de la recherche correspond à celui de la base de données 
+    // rowCount vérifie si les champs sont remplies
+    // fetch récupère les éléments de la base de données
+    
+     // Vérifie si l'utilisateur a saisi un mot de passe
+    if (empty(trim($data->mdp))) 
+         $messages['mdp'] = "Mot de passe obligatoire";
+    
+    // Vérifie si l'utilisateur a saisi un mot de passe de 8 caractères
+    if (strlen($data->mdp) <= 8)
+        $messages['mdp'] = "Mot de passe de 8 caractères minimum";
+    
+    if (empty(trim($data->mail))) {
+        $messages['mail'] = "Adresse email obligatoire";
+    } else if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
+        $messages['mail'] = "Adresse email non valide";
+    } else {
+        $bd->execute(array(":recherche" => $data->mail));
+    }
+    if ($bd->rowCount() == 0) {
+        $messages['mail'] = "Email invalide";
+    }
+    if (empty(trim($data->mdp))) {
+        $messages['mdp'] = "Mot de passe obligatoire";
+    } else {
+        $row = $st->fetch();
+        if (!password_verify($data->mdp, $row['mdp'])) {
+            $messages['mdp'] = "Mot de passe incorrect";
+        }
+    }
+
+    if (count($messages) < 1) {
+        $_SESSION['user'] = $row['nom'];
+        Flight::redirect("/");
+    } else {
+        Flight::render("login.tpl", array("value" => $_POST, "error" => $messages));
+    }
+    $_SESSION['mail'] = $data->mail;
+});
+
+
+Flight::route('GET /logout', function () {
+    session_destroy();
+    Flight::redirect("/");
+});
 
 
 ?>
