@@ -1,4 +1,5 @@
-<?php
+<?php 
+session_start();
 require 'index-config.php';
 
 Flight::set('db',$db);
@@ -17,6 +18,11 @@ Flight::map('render', function($template, $data){
     Flight::view()->assign($data);
     Flight::view()->display($template);
 });
+
+if (isset($_SESSION["mail"]))
+{
+     Flight::view()->assign("__session__", $_SESSION["mail"]);
+}
 
 require "routes.php";
 Flight::start();
