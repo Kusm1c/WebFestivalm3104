@@ -170,7 +170,7 @@
       
       <div>
       <label for="presentation">Presentation (Maximum 5OO caractères)  :</label>
-      <textarea   rows="5" cols="33" type="text" id="presentation" name="presentation" 
+      <textarea style="resize: vertical;"   rows="5" cols="33" type="text" id="presentation" name="presentation" 
       maxlength="500" size="10" value= {$value.presentation|escape|default:''}  >
 	  </textarea>
    	  <span> {$messages.presentation|escape|default:''}</span>
@@ -178,7 +178,7 @@
 
 	<div>
 	   <label for="experience">Expériences scéniques (Maximum 5OO caractères) :</label>
-      <textarea   rows="5" cols="33"  type="text" id="experience" name="experience"
+      <textarea  style="resize: vertical;"  rows="5" cols="33"  type="text" id="experience" name="experience"
       maxlength="500" size="10" value= {$value.experience|escape|default:''} >
 	  </textarea>
    	  <span> {$messages.experience|escape|default:''}</span>
@@ -310,7 +310,7 @@
 	<input type="file"id="mp3_1" name="mp3_1" accept=".mp3">
     <span> {$messages.mp3_1|escape|default:''}</span>
 
-	    <label for="mp3_2">Deuxième fichier mp3</label>
+	<label for="mp3_2">Deuxième fichier mp3</label>
 	<input type="file"id="mp3_2" name="mp3_2" accept=".mp3" >
     <span> {$messages.mp3_2|escape|default:''}</span>
 

@@ -141,7 +141,7 @@ Flight::route('POST /formulaire', function(){
         $messages['phone'] = "Numéro de téléphone non valable";
     
      // Vérifie si l'utilisateur a saisi un style musical
-     if (empty(trim($data->style))) {
+    if (empty(trim($data->style))) {
         $messages['style'] = "Veuillez indiquer un style musical";
     }
 
@@ -155,7 +155,7 @@ Flight::route('POST /formulaire', function(){
     }
 
       // Vérifie si l'utilisateur a saisi quelquechose dans la zone de texte Présentation
-      if (empty(trim($data->presentation))) {
+    if (empty(trim($data->presentation))) {
         $messages['presentation'] = "Veuillez écrire quelques lignes pour vous présenter";
     }
 
@@ -173,7 +173,7 @@ Flight::route('POST /formulaire', function(){
         $messages['urlsite'] = "URL non valide";
     
      // Vérifie la validité de l'url saisi pour l'adresse page soundcloud
-     if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL)) 
+    if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL)) 
         $messages['urlsoundcloud'] = "URL non valide";
 
     // Vérifie la validité de l'url saisi pour l'adresse page youtube
@@ -229,8 +229,8 @@ Flight::route('POST /formulaire', function(){
         $messages['techniquepdf'] = "Fichier non valide";
     } 
 
-     // Test si l'utilsateur a rentré un fichier technique
-     if (!isset($_FILES['techniquepdf']))
+    // Test si l'utilsateur a rentré un fichier technique
+    if (!isset($_FILES['techniquepdf']))
         $messages['techniquepdf'] = "Veuillez saisir un fichier";
  
     // Test pour traiter les erreur lors de l'envoi du fichier technique
@@ -238,13 +238,13 @@ Flight::route('POST /formulaire', function(){
         $messages['techniquepdf'] = "Erreur veuillez réessayer";
 
     // Vérifier la validité de l'extension .pdf des fichiers SACEM
-      if(!preg_match('/\.(pdf)$/',$_FILES['sacempdf']['name'])){
+    if(!preg_match('/\.(pdf)$/',$_FILES['sacempdf']['name'])){
         unset($_FILES['sacempdf']) ;
         $messages['sacempdf'] = "Fichier non valide";
     } 
 
      // Test si l'utilsateur a rentré un fichier SACEM
-     if (!isset($_FILES['sacempdf']))
+    if (!isset($_FILES['sacempdf']))
         $messages['sacempdf'] = "Veuillez saisir un fichier";
  
     // Test pour traiter les erreur lors de l'envoi du fichier SACEM
@@ -291,7 +291,7 @@ Flight::route('POST /formulaire', function(){
             //redirige vers la page  success
             Flight::redirect("/success");
             // sinon retour sur la page register et affichage des messages d'erreurs
-        }else {
+        }else{
             Flight::render("form_candidat.tpl", array(
                 'messages' => $messages,
                 'valeurs' => $_POST
