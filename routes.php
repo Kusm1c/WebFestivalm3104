@@ -185,7 +185,7 @@ Flight::route('POST /formulaire', function(){
         unset($_FILES['mp3']) ; //supprime le fichier directement (sécurité)
         $messages['mp3'] = "Fichier non valide";
     } 
-    // Test si l'utilsateur a rentré 3 (pas sûr, peut être qu'1) fichiers mp3
+    // Test si l'utilsateur a rentré 3 fichiers mp3
     if (!isset($_FILES['mp3']))
         $messages['mp3'] = "Veuillez saisir un fichier";
     
@@ -209,7 +209,7 @@ Flight::route('POST /formulaire', function(){
         $messages['photo'] = "Fichier non valide";
     } 
 
-    // Test si l'utilsateur a rentré 2 (pas sûr, peut être qu'1) fichiers photo
+    // Test si l'utilsateur a rentré 2  fichiers photo
     if (!isset($_FILES['photo']))
         $messages['photo'] = "Veuillez saisir un fichier";
     
