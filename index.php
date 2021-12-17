@@ -3,7 +3,6 @@ session_start();
 require 'index-config.php';
 
 Flight::set('db',$db);
-session_start();
 
 // Register Smarty as the view class
 // Also pass a callback function to configure Smarty on load
