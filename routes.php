@@ -49,23 +49,23 @@ Flight::route('POST /register', function () {
         $messages['code'] = "Code postal invalide";
 
     // Vérifie si l'utilisateur a saisi un numero de telephone
-    if (strlen($data->telephone) === 10)
-        $messages['telephone'] = "Numero de telephone à 10 chiffres";
+    if (strlen($data->phone) == 10)
+        $messages['phone'] = "Numero de telephone à 10 chiffres";
 
     // Vérifie si l'utilisateur a saisi un numero de telephone
-    if (empty(trim($data->telephone)))
-        $messages['telephone'] = "Numero de telephone obligatoire";
+    if (empty(trim($data->phone)))
+        $messages['phone'] = "Numero de telephone obligatoire";
 
     // SI nous avons aucun messages d'erreurs alors envoyer les données dans la BDD
     if (count($messages) <= 0) {
-        $st = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
-        $st->execute(array(
+        $db = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
+        $db->execute(array(
             ':nom' => $data->nom,
             ':prenom' => $data->prenom,
             ':addresse' => $data->addresse,
             'codePostal' => $data->codePostal,
             ':mail' => $data->mail,
-            ':telephone' => $data->telephone,
+            ':phone' => $data->phone,
             ':mdp' => password_hash($data->mdp, PASSWORD_DEFAULT),
 
         ));
@@ -97,6 +97,12 @@ Flight::route('POST /formulaire', function () {
     // Vérifie si l'utilisateur a saisi un nom de groupe
     if (empty(trim($data->nomgrp)))
         $messages['nomgrp'] = "Nom de groupe obligatoire";
+
+    if ($data->scene == "rien")
+        $messages['scene'] = "Veuillez choisir une scène";
+
+    if ($data->dpt == "rien")
+        $messages['dpt'] = "Veuillez choisir un département";
 
 
     //Vérifie si l'utilsateur a choisi un département 
@@ -134,7 +140,7 @@ Flight::route('POST /formulaire', function () {
         $messages['mail'] = "Adresse email non valide";
 
     // Vérifie la validité du numéro de téléphone
-    if (!preg_match('`[0-9]{10}`', $data->phone))
+    if (strlen($data->phone) != 10)
         $messages['phone'] = "Numéro de téléphone non valable";
 
     // Vérifie si l'utilisateur a saisi un style musical
@@ -169,20 +175,27 @@ Flight::route('POST /formulaire', function () {
     if (!filter_var($data->urlsite, FILTER_VALIDATE_URL))
         $messages['urlsite'] = "URL non valide";
 
-    // Vérifie la validité de l'url saisi pour l'adresse page soundcloud
-    if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL))
-        $messages['urlsoundcloud'] = "URL non valide";
 
-    // Vérifie la validité de l'url saisi pour l'adresse page youtube
-    if (!filter_var($data->urlyoutube, FILTER_VALIDATE_URL))
-        $messages['urlyoutube'] = "URL non valide";
+    if (isset($data->usercloud)) {
+
+        // Vérifie la validité de l'url saisi pour l'adresse page soundcloud
+        if (!filter_var($data->urlsoundcloud, FILTER_VALIDATE_URL))
+            $messages['urlsoundcloud'] = "URL non valide";
+    }
+
+
+    if (isset($data->useryoutube)) {
+
+        // Vérifie la validité de l'url saisi pour l'adresse page youtube
+        if (!filter_var($data->urlyoutube, FILTER_VALIDATE_URL))
+            $messages['urlyoutube'] = "URL non valide";
+    }
 
 
 
     // mp3_1
 
     if (preg_match('/\.(mp3)$/', $files['mp3_1']['name'])) {
-        echo ("ok");
     } else {
         unset($files['mp3_1']);
         $messages["mp3_1"] = "Format incorrect ";
@@ -193,7 +206,6 @@ Flight::route('POST /formulaire', function () {
 
     //mp3_2
     if (preg_match('/\.(mp3)$/', $files['mp3_2']['name'])) {
-        echo ("ok");
     } else {
         unset($files['mp3_2']);
         $messages["mp3_2"] = "Format incorrect ";
@@ -206,7 +218,6 @@ Flight::route('POST /formulaire', function () {
 
 
     if (preg_match('/\.(mp3)$/', $files['mp3_3']['name'])) {
-        echo ("ok");
     } else {
         unset($files['mp3_3']);
         $messages["mp3_3"] = "Format incorrect ";
@@ -215,20 +226,30 @@ Flight::route('POST /formulaire', function () {
     if (!isset($files["mp3_3"]))
         $messages['mp3_3'] = "Veuillez saisir un fichier";
 
-    // Vérifier la validité de l'extension .pdf des fichiers dossierpdf
-    if (preg_match('/\.(pdf)$/', $files['dossierpdf']['name'])) {
-        echo ("ok");
-    } else {
-        unset($files['dossierpdf']);
-        $messages['dossierpdf'] = "Format incorrect ";
+    if ($files['dossierpdf'] == 'Aucun fichier choisi' ) {
+
+        // Vérifier la validité de l'extension .pdf des fichiers dossierpdf
+        if (preg_match('/\.(pdf)$/', $files['dossierpdf']['name'])) {
+        } else {
+            unset($files['dossierpdf']);
+            $messages['dossierpdf'] = "Format incorrect ";
+        }
+    }
+    if (!isset($data->assoc)) {
+        $messages['assoc'] = "Veuillez cocher oui ou non";
     }
 
-    if (!isset($files['dossierpdf']))
-        $messages['dossierpdf'] = "Veuillez saisir un fichier";
+    if (!isset($data->sacem)) {
+        $messages['sacem'] = "Veuillez cocher oui ou non";
+    }
+
+    if (!isset($data->prod)) {
+        $messages['prod'] = "Veuillez cocher oui ou non";
+    }
+
 
     // Vérifier la validité de l'extension .jpg .jpeg ou png du fichier photo_1
     if (preg_match('/\.(jpg|jpeg|png)$/', $files['photo_1']['name'])) {
-        echo ("ok");
     } elseif (($files['photo_1']['size'] <= 5240000) && ($files['photo_1']['size'] > 0)) // Test si fichiers photos pas trop grand
         $messages['photo_1'] = "fichier trop volumineux";
     else {
@@ -241,7 +262,6 @@ Flight::route('POST /formulaire', function () {
 
     // Vérifier la validité de l'extension .jpg .jpeg ou png du fichier photo_2
     if (preg_match('/\.(jpg|jpeg|png)$/', $files['photo_2']['name'])) {
-        echo ("ok");
     } elseif (($files['photo_2']['size'] <= 5240000) && ($files['photo_2']['size'] > 0)) // Test si fichiers photos pas trop grand
         $messages['photo_2'] = "fichier trop volumineux";
     else {
@@ -253,7 +273,6 @@ Flight::route('POST /formulaire', function () {
 
     // Vérifier la validité de l'extension .pdf du fichier techniquepdf
     if (preg_match('/\.(pdf)$/', $files['techniquepdf']['name'])) {
-        echo ("ok");
     } else {
         unset($files['techniquepdf']);
         $messages['techniquepdf'] = "Format incorrect ";
@@ -266,7 +285,6 @@ Flight::route('POST /formulaire', function () {
 
     // Vérifier la validité de l'extension .pdf du fichier sacempdf
     if (preg_match('/\.(pdf)$/', $files['sacempdf']['name'])) {
-        echo ("ok");
     } else {
         unset($files['sacempdf']);
         $messages['sacempdf'] = "Format incorrect ";
@@ -283,8 +301,8 @@ Flight::route('POST /formulaire', function () {
         $messages['mrembre'] = "Au moins 1 membre requis (vous)";
 
     if (count($messages) == 0) {
-        $st = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:isnot_assoc,:is_sacem,:isnot_sacem,:is_prod,:isnot_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf,:membres)");
-        $st->execute(array(
+        $db = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:is_sacem,:is_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf,:membres)");
+        $db->execute(array(
             ':nomgrp' => $data->nomgrp,
             ':ep' => $data->dep,
             ':style' => $data->style,
@@ -294,12 +312,9 @@ Flight::route('POST /formulaire', function () {
             ':urlsite' => $data->urlsite,
             ':urlsoundcloud' => $data->urlsoundcloud,
             ':urlyoutube' => $data->urlyoutube,
-            ':is_assoc' => $data->is_assoc,
-            ':isnot_assoc' => $data->isnot_assoc,
-            ':is_sacem' => $data->is_sacem,
-            ':isnot_sacem' => $data->isnot_sacem,
-            ':is_prod' => $data->is_prod,
-            ':isnot_prod' => $data->isnot_prod,
+            ':is_assoc' => $data->assoc,
+            ':is_sacem' => $data->sacem,
+            ':is_prod' => $data->prod,
             ':mp3' => $data->mp3,
             ':dossierpdf' => $data->dossierpdf,
             ':photo' => $data->photo,
@@ -308,11 +323,11 @@ Flight::route('POST /formulaire', function () {
             ':membres' => $mbrtot
         ));
 
-        $st = Flight::get('pdo')->prepare("INSERT INTO département VALUES(:département)");
-        $st->execute(array(':département' => $data->dpt));
+        $db = Flight::get('pdo')->prepare("INSERT INTO département VALUES(:département)");
+        $db->execute(array(':département' => $data->dpt));
 
-        $st = Flight::get('pdo')->prepare("INSERT INTO scene VALUES(:scene)");
-        $st->execute(array(':scene' => $data->scene));
+        $db = Flight::get('pdo')->prepare("INSERT INTO scene VALUES(:scene)");
+        $db->execute(array(':scene' => $data->scene));
         //redirige vers la page  success
         Flight::redirect("/success");
         // sinon retour sur la page register et affichage des messages d'erreurs
@@ -320,7 +335,6 @@ Flight::route('POST /formulaire', function () {
         Flight::render("form_candidat.tpl", array(
             'messages' => $messages,
             'valeurs' => $_POST
-
         ));
     }
 });
@@ -359,7 +373,7 @@ Flight::route('POST /login', function () {
     if (empty(trim($data->mdp))) {
         $messages['mdp'] = "Mot de passe obligatoire";
     } else {
-        $row = $st->fetch();
+        $row = $db->fetch();
         if (!password_verify($data->mdp, $row['mdp'])) {
             $messages['mdp'] = "Mot de passe incorrect";
         }
