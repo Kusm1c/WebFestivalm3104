@@ -1,5 +1,5 @@
 {extends file='layout.tpl'}
-{block name=title}Formulaire de Candidature{/block}
+{block name=title}Formulaire de candidature{/block}
 {block name=body}
 
 
