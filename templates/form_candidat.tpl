@@ -3,7 +3,7 @@
 {block name=body}
 <h1>Register</h1>
 <div id='main'>
-<form class="pure-form pure-form-stacked" action="envoi" enctype="multipart/form-data" method="post">
+<form class="pure-form pure-form-stacked" action="form_candidat" enctype="multipart/form-data" method="post">
     <fieldset>
         <legend>Inscription</legend>
       <div>
