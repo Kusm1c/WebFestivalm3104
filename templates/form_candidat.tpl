@@ -10,9 +10,13 @@
       </div>
     </div>
 
+    {* Formulaire bootstrap, POST /formulaire avec inclusion encodage pour fichiers *}
     <form action="formulaire" method="post" enctype="multipart/form-data">
       <h3><br>Groupe<br></h3>
+
       <div class="row">
+
+        {* Input nom du groupe *}
         <div class="group col-md-6">
           <br><label for="nomgrp">Nom du groupe</label>
           <input class="form-control" type="text" id="nomgrp" name="nomgrp" placeholder="Nom du groupe"
@@ -20,6 +24,7 @@
           <span> {$messages.nomgrp|escape|default:''}</span>
         </div>
 
+        {* Input type de scène *}
         <div class="group col-md-3"><br>
           <label for="scene :">Type de scène :</label>
           <select class="form-control" name="scene" id="scene">
@@ -31,6 +36,7 @@
           <span> {$messages.scene|escape|default:''}</span>
         </div>
 
+        {* Select département *}
         <div class="group col-md-3"><br>
           <label for="dpt">Département :</label>
           <select class="form-control" name="dpt" id="dpt">
@@ -55,7 +61,7 @@
             <option value="18">18 - CHER</option>
             <option value="19">19 - CORREZE</option>
             <option value="21">21 - COTE - D'OR</option>
-          <option value="22">22 - COTES D'ARMOR</option>
+            <option value="22">22 - COTES D'ARMOR</option>
             <option value="23">23 - CREUSE</option>
             <option value="24">24 - DORDOGNE</option>
             <option value="25">25 - DOUBS</option>
@@ -131,28 +137,30 @@
             <option value="93">93 - SEINE - SAINT - DENIS</option>
             <option value="94">94 - VAL - DE - MARNE</option>
             <option value="95">95 - VAL - D'OISE</option>
-          <option value="971">971 - GUADELOUPE</option>
-          <option value="972">972 - MARTINIQUE</option>
-          <option value="973">973 - GUYANE</option>
-          <option value="974">974 - REUNION</option>
-          <option value="975">975 - ST PIERRE et MIQUELON</option>
-          <option value="984">984 - TERRES AUSTRALES ANTARCTIQUES</option>
-          <option value="985">985 - MAYOTTE</option>
-          <option value="986">986 - WALLIS ET FUTUNA</option>
-          <option value="987">987 - POLYNESIE FRANçAISE</option>
-          <option value="988">988 - NOUVELLE - CALEDONIE</option>
-          <option value="995">995 - EXPATRIES ZONE 1</option>
-          <option value="996">996 - EXPATRIES ZONE 2</option>
-          <option value="997">997 - EXPATRIES ZONE 3</option>
-          <option value="998">998 - EXPATRIES ZONE 4</option>
-          <option value="999">999 - ETRANGERS EN FRANCE</option>
+            <option value="971">971 - GUADELOUPE</option>
+            <option value="972">972 - MARTINIQUE</option>
+            <option value="973">973 - GUYANE</option>
+            <option value="974">974 - REUNION</option>
+            <option value="975">975 - ST PIERRE et MIQUELON</option>
+            <option value="984">984 - TERRES AUSTRALES ANTARCTIQUES</option>
+            <option value="985">985 - MAYOTTE</option>
+            <option value="986">986 - WALLIS ET FUTUNA</option>
+            <option value="987">987 - POLYNESIE FRANçAISE</option>
+            <option value="988">988 - NOUVELLE - CALEDONIE</option>
+            <option value="995">995 - EXPATRIES ZONE 1</option>
+            <option value="996">996 - EXPATRIES ZONE 2</option>
+            <option value="997">997 - EXPATRIES ZONE 3</option>
+            <option value="998">998 - EXPATRIES ZONE 4</option>
+            <option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
       </div>
     </div>
 
 
     <h3><br>Représentant du groupe<br></h3>
+
     <div class="row">
+      {* Input nom rép groupe *}
       <div class="group col-md-6">
         <label for="name">Nom :</label>
         <input class="form-control" id="name" type="text" id="name" name="name" placeholder="Nom"
@@ -160,6 +168,7 @@
         <span> {$messages.name|escape|default:''}</span>
       </div>
 
+      {* Input prénom rép groupe *}
       <div class="group col-md-6">
         <label for="prenom">Prénom :</label>
         <input class="form-control" type="text" id="prenom" name="prenom" placeholder="Prénom"
@@ -170,6 +179,7 @@
 
 
     <div class="row">
+      {* Input adresse rép groupe *}
       <div class="group col-md-6"><br>
         <label for="adresse">Adresse :</label>
         <input class="form-control" type="text" id="adresse" name="adresse" placeholder="Adresse"
@@ -177,6 +187,7 @@
         <span> {$messages.adresse|escape|default:''}</span>
       </div>
 
+      {* Input code postal rép groupe *}
       <div class="group col-md-6"><br>
         <label for="code">Code Postal :</label>
         <input class="form-control" type="number" id="code" name="code" pattern="[0-9]{5}" placeholder="80000"
@@ -187,6 +198,7 @@
 
 
     <div class="row">
+      {* Input email rép groupe *}
       <div class="group col-md-6"><br>
         <label for="stacked-email">Email :</label>
         <input class="form-control" type="email" id="mail" name="mail" placeholder="Email"
@@ -194,6 +206,7 @@
         <span> {$messages.mail|escape|default:''}</span>
       </div>
 
+      {* Input tél rép groupe *}
       <div class="group col-md-6"><br>
         <label for="phone">Téléphone :</label>
         <input class="form-control" type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="0601020304"
@@ -205,6 +218,7 @@
 
     <h3><br>Informations sur le groupe<br></h3>
     <div class="row">
+      {* Input style musical *}
       <div class="group col-md-6"><br>
         <label for="style">Style musical :</label>
         <input class="form-control" type="text" id="style" name="style" placeholder="Classique, Rock..."
@@ -212,6 +226,7 @@
         <span> {$messages.style|escape|default:''}</span>
       </div>
 
+      {* Input année création *}
       <div class="group col-md-6"><br>
         <label for="annee">Année de création :</label>
         <input class="form-control" type="number" id="annee" name="annee" placeholder="Année" min="1800" max="2021"
@@ -220,27 +235,30 @@
       </div>
     </div>
 
-
+    {* Input txt présentation *}
     <div class="row">
       <div class="group col-md-6"><br>
         <label for="presentation">Présentation :</label>
         <textarea class="form-control" type="text" id="presentation" name="presentation" maxlength="500"
           value={$value.presentation|escape|default:''}></textarea>
-        <small id="aidepresentation" class="text-muted">500 caractères maximum.</small>
+        <small id="aidepresentation" class="text-muted">500 caractères maximum.</small><br>
         <span> {$messages.presentation|escape|default:''}</span>
       </div>
 
+      {* Input txt exp. scéniques *}
       <div class="group col-md-6"><br>
         <label for="experience">Expériences scéniques :</label>
         <textarea class="form-control" type="text" id="experience" name="experience" maxlength="500"
           value={$value.experience|escape|default:''}></textarea>
-        <small id="aideScene" class="text-muted">500 caractères maximum.</small>
+        <small id="aideScene" class="text-muted">500 caractères maximum.</small><br>
         <span> {$messages.experience|escape|default:''}</span>
       </div>
     </div>
 
 
     <div class="row">
+
+      {* Input site web / facebook *}
       <div class="group col-md-4"><br>
         <label for="urlsite">Site web ou page Facebook :</label>
         <input class="form-control" type="url" name="urlsite" id="urlsite" placeholder="https://..."
@@ -248,25 +266,28 @@
         <span> {$messages.urlsite|escape|default:''}</span>
       </div>
 
+      {* Input page souncloud *}
       <div class="group col-md-4"><br>
         <label for="urlsoundcloud">Adresse de page soundcloud :</label>
         <input class="form-control" type="url" name="urlsoundcloud" id="urlsoundcloud"
           placeholder="https://soundcloud.com/..." pattern="https://.*" value={$value.urlsoundcloud|escape|default:''}>
+        <small id="aideSoundcloud" class="text-muted">Facultatif.</small><br>
         <span> {$messages.urlsoundcloud|escape|default:''}</span>
-        <small id="aideSoundcloud" class="text-muted">Facultatif.</small>
       </div>
 
+      {* Input page YT *}
       <div class="group col-md-4"><br>
         <label for="urlyoutube">Adresse de page youtube :</label>
         <input class="form-control" type="url" name="urlyoutube" id="urlyoutube" placeholder="https://youtube.com/..."
           pattern="https://.*" size="15" value={$value.urlyoutube|escape|default:''}>
-        <small id="aideYt" class="text-muted">Facultatif.</small>
+        <small id="aideYt" class="text-muted">Facultatif.</small><br>
         <span> {$messages.urlyoutube|escape|default:''}</span>
       </div>
     </div>
 
 
     <div class="row">
+      {* Boutons radio statut associatif *}
       <div class="group col-md-4"><br>
         <label for="assoc">Statut associatif :</label><br>
         <div class="form-check">
@@ -276,9 +297,11 @@
         <div class="form-check">
           <input class="form" type="radio" id="isnot_assoc" name="assoc" value="isnot_assoc">
           <label for="isnot_assoc">non</label>
+          <span> {$messages.assoc|escape|default:''}</span>
         </div>
       </div>
 
+      {* Boutons Radio sacem *}
       <div class="group col-md-4"><br>
         <label for="sacem">Inscrit à la SACEM :</label><br>
         <div class="form-check">
@@ -288,9 +311,11 @@
         <div class="form-check">
           <input type="radio" id="isnot_sacem" name="sacem" value="isnot_sacem">
           <label for="isnot_sacem">non</label>
+          <span> {$messages.sacem|escape|default:''}</span>
         </div>
       </div>
 
+      {* Boutons radio producteur *}
       <div class="group col-md-4"><br>
         <label for="prod">Producteur :</label><br>
         <div class="form-check">
@@ -300,17 +325,18 @@
         <div class="form-check">
           <input type="radio" id="isnot_prod" name="prod" value="isnot_prod">
           <label for="isnot_prod">non</label>
+          <span> {$messages.prod|escape|default:''}</span>
         </div>
       </div>
     </div>
 
-
     <h3><br>Membres du groupe</h3>
     <div class="row">
       <small id="aideMembres" class="text-muted">Au moins un membre requis.</small>
+
+      {* Input membres du groupe (1 à 4) *}
       <div class="group col-md-3"><br>
         <label for="mbr1">Membre 1 :</label>
-
         <input class="form-control" type="text" id="mbr1" name="mbr1" placeholder=" Nom Prénom (instrument)"
           value={$value.mbr1|escape|default:''}>
         <span> {$messages.mbr1|escape|default:''}</span>
@@ -335,8 +361,9 @@
       </div>
     </div>
 
-
     <div class="row">
+
+      {* Input membres du groupe (4 à 8) *}
       <div class="group col-md-3"><br>
         <label for="mbr5">Membre 5 :</label>
         <input class="form-control" type="text" id="mbr1" name="mbr1" placeholder=" Nom Prénom (instrument)"
@@ -362,21 +389,23 @@
         <span> {$messages.mbr8|escape|default:''}</span>
       </div>
 
-
       <h3><br>Fichiers</h3>
       <div class="row">
+        {* Input premier fichier mp3 *}
         <div class="group col-md-4"><br>
           <label for="mp3_1">Premier fichier mp3</label>
           <input class="form-control" type="file" id="mp3_1" name="mp3_1" accept=".mp3">
           <span> {$messages.mp3_1|escape|default:''}</span>
         </div>
 
+        {* Input deuxième fichier mp3 *}
         <div class="group col-md-4"><br>
           <label for="mp3_2">Deuxième fichier mp3</label>
           <input class="form-control" type="file" id="mp3_2" name="mp3_2" accept=".mp3">
           <span> {$messages.mp3_2|escape|default:''}</span>
         </div>
 
+        {* Input troisième fichier mp3 *}
         <div class="group col-md-4"><br>
           <label for="mp3_3">Troisième fichier mp3</label>
           <input class="form-control" type="file" id="mp3_3" name="mp3_3" accept=".mp3">
@@ -386,19 +415,23 @@
 
 
       <div class="row">
+
+        {* Input fichier presse pdf *}
         <div class="group col-md-4"><br>
           <label for="dossierpdf">Dossier de presse PDF</label>
           <input class="form-control" type="file" id="dossierpdf" name="dossierpdf" accept=".pdf">
-          <small id="aideYt" class="text-muted">Facultatif.</small>
+          <small id="aideYt" class="text-muted">Facultatif.</small><br>
           <span> {$messages.dossierpdf|escape|default:''}</span>
         </div>
 
+        {* Input fichier technique pdf *}
         <div class="group col-md-4"><br>
           <label for="techniquepdf">Fiche technique PDF</label>
           <input class="form-control" type="file" id="techniquepdf" name="techniquepdf" accept=".pdf">
           <span> {$messages.techniquepdf|escape|default:''}</span>
         </div>
 
+        {* Input fichier SACEM pdf *}
         <div class="group col-md-4"><br>
           <label for="sacempdf">Document SACEM PDF</label>
           <input class="form-control" type="file" id="sacempdf" name="sacempdf" accept=".pdf">
@@ -407,14 +440,16 @@
       </div>
 
 
-      <br>
       <div class="row">
+
+        {* Input photo 1 *}
         <div class="group col-md-6"><br>
           <label for="photo_1">Photo 1</label>
           <input class="form-control" type="file" id="photo_1" name="photo_1" accept=".jpg, .jpeg, .png">
           <span> {$messages.photo_1|escape|default:''}</span>
         </div>
 
+        {* Input photo 2 *}
         <div class="group col-md-6"><br>
           <label for="photo_2">Photo 2</label>
           <input class="form-control" type="file" id="photo_2" name="photo_2" accept=".jpg, .jpeg, .png">
@@ -422,7 +457,7 @@
         </div>
       </div>
 
-
+      {* Bouton inscription submit *}
       <div class="row">
         <div class="group col text-center">
           <br>
