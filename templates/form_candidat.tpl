@@ -4,7 +4,7 @@
   <div class="container">
     <br>
     <h1>Formulaire de candidature</h1><br>
-    <form action="formulaire" method="post">
+    <form action="form_candidat" method="post">
 
       <br>
       <h3>Groupe</h2>
