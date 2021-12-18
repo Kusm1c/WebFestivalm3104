@@ -5,14 +5,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="group col text-center">
+      <div class="text-center">
         <h1><br>Formulaire de candidature<br></h1>
       </div>
     </div>
 
     <form action="formulaire" method="post" enctype="multipart/form-data">
-      <br>
-      <h3>Groupe</h3>
+      <h3><br>Groupe<br></h3>
       <div class="row">
         <div class="group col-md-6">
           <br><label for="nomgrp">Nom du groupe</label>
@@ -147,7 +146,6 @@
           <option value="997">997 - EXPATRIES ZONE 3</option>
           <option value="998">998 - EXPATRIES ZONE 4</option>
           <option value="999">999 - ETRANGERS EN FRANCE</option>
-
         </select>
       </div>
     </div>
