@@ -398,7 +398,7 @@
         <div class="group col-md-4"><br>
           <label for="techniquepdf">Fiche technique PDF</label>
           <input class="form-control" type="file" id="techniquepdf" name="techniquepdf" accept=".pdf">
-          <span> {$messages.technique|escape|default:''}</span>
+          <span> {$messages.techniquepdf|escape|default:''}</span>
         </div>
 
         <div class="group col-md-4"><br>
@@ -412,14 +412,14 @@
       <br>
       <div class="row">
         <div class="group col-md-6"><br>
-          <label for="photo">Photo 1</label>
-          <input class="form-control" type="file" id="photo_1" name="photo" accept=".jpg, .jpeg, .png">
+          <label for="photo_1">Photo 1</label>
+          <input class="form-control" type="file" id="photo_1" name="photo_1" accept=".jpg, .jpeg, .png">
           <span> {$messages.photo_1|escape|default:''}</span>
         </div>
 
         <div class="group col-md-6"><br>
-          <label for="photo">Photo 2</label>
-          <input class="form-control" type="file" id="photo_2" name="photo" accept=".jpg, .jpeg, .png">
+          <label for="photo_2">Photo 2</label>
+          <input class="form-control" type="file" id="photo_2" name="photo_2" accept=".jpg, .jpeg, .png">
           <span> {$messages.photo_2|escape|default:''}</span>
         </div>
       </div>

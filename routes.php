@@ -180,76 +180,103 @@ Flight::route('POST /formulaire', function(){
     if (!filter_var($data->urlyoutube, FILTER_VALIDATE_URL)) 
         $messages['urlyoutube'] = "URL non valide";
 
-    // Vérifier la validité de l'extension .mp3 des fichiers mp3
-    if(!preg_match('/\.(mp3)$/',$_FILES['mp3']['name'])){
-        unset($_FILES['mp3']) ; //supprime le fichier directement (sécurité)
-        $messages['mp3'] = "Fichier non valide";
-    } 
-    // Test si l'utilsateur a rentré 3 fichiers mp3
-    if (!isset($_FILES['mp3']))
-        $messages['mp3'] = "Veuillez saisir un fichier";
     
-    // Test pour traiter les erreur lors de l'envoi des mp3
-    if ($_FILES['mp3']['error'] != 0)
-        $messages['mp3'] = "Erreur veuillez réessayer";
+    
+    // mp3_1
+ 
+    if (preg_match('/\.(mp3)$/',$_FILES['mp3_1']['name'])) {
+        echo("ok");
+    } else {
+        unset($_FILES['mp3_1']) ;
+        $messages["mp3_1"] = "Format incorrect ";
+    }
+    if (!isset($_FILES["mp3_1"])) {
+        $messages['mp3_1'] = "Veuillez saisir un fichier";
+    }
 
+    //mp3_2
+    if (preg_match('/\.(mp3)$/',$_FILES['mp3_2']['name'])){
+        echo("ok");
+        }else{
+            unset($_FILES['mp3_2']) ;
+            $messages["mp3_2"] = "Format incorrect ";
+        }
+
+    if(!isset($_FILES["mp3_2"]))
+        $messages['mp3_2'] = "Veuillez saisir un fichier";
+
+    //mp3_3
+   
+    
+    if (preg_match('/\.(mp3)$/',$_FILES['mp3_3']['name'])){
+        echo("ok");
+        }else{
+            unset($_FILES['mp3_3']) ;
+            $messages["mp3_3"] = "Format incorrect ";
+        }
+
+    if(!isset($_FILES["mp3_3"]))
+        $messages['mp3_3'] = "Veuillez saisir un fichier";
+    
     // Vérifier la validité de l'extension .pdf des fichiers dossierpdf
-    if(!preg_match('/\.(pdf)$/',$_FILES['dossierpdf']['name'])){
-        unset($_FILES['dossierpdf']) ;
-        $messages['dossierpdf'] = "Fichier non valide";
-    } 
-
-    // Test pour traiter les erreur lors de l'envoi du pdf
-    if ($_FILES['dossierpdf']['error'] != 0)
-        $messages['dossierpdf'] = "Erreur veuillez réessayer";
-
-    // Vérifier la validité de l'extension .jpg .jpeg ou png des fichiers photos
-    if(!preg_match('/\.(jpg|jpeg|png)$/',$_FILES['photo']['name'])){
-        unset($_FILES['photo']) ;
-        $messages['photo'] = "Fichier non valide";
-    } 
-
-    // Test si l'utilsateur a rentré 2  fichiers photo
-    if (!isset($_FILES['photo']))
-        $messages['photo'] = "Veuillez saisir un fichier";
+    if (preg_match('/\.(pdf)$/',$_FILES['dossierpdf']['name'])){
+        echo("ok");
+        }else{
+            unset($_FILES['dossierpdf']) ;
+            $messages['dossierpdf'] = "Format incorrect ";
+        }
     
-    // Test pour traiter les erreur lors de l'envoi des photos
-    if ($_FILES['photo']['error'] != 0)
-        $messages['photo'] = "Erreur veuillez réessayer";
+    if(!isset($_FILES['dossierpdf']))
+        $messages['dossierpdf'] = "Veuillez saisir un fichier";
 
-    // Test si fichiers photos pas trop grand
-    if ($_FILES['photo']['size'] <= 5240000)// en octets
-        $messages['photo'] = "fichier trop volumineux";
+    // Vérifier la validité de l'extension .jpg .jpeg ou png du fichier photo_1
+    if (preg_match('/\.(jpg|jpeg|png)$/',$_FILES['photo_1']['name'])){
+        echo("ok");
+    }elseif (($_FILES['photo_1']['size'] <= 5240000)&&($_FILES['photo_1']['size'] >0)) // Test si fichiers photos pas trop grand
+    $messages['photo_1'] = "fichier trop volumineux";
+    else{
+        unset($_FILES['photo_1']) ;
+        $messages['photo_1'] = "Format incorrect ";
+        }
+    
+    if(!isset($_FILES['photo_1']))
+        $messages['photo_1'] = "Veuillez saisir un fichier";
+    
+    // Vérifier la validité de l'extension .jpg .jpeg ou png du fichier photo_2
+    if (preg_match('/\.(jpg|jpeg|png)$/',$_FILES['photo_2']['name'])){
+        echo("ok");
+    }elseif (($_FILES['photo_2']['size'] <= 5240000)&&($_FILES['photo_2']['size'] >0)) // Test si fichiers photos pas trop grand
+    $messages['photo_2'] = "fichier trop volumineux";
+    else{
+        unset($_FILES['photo_2']) ;
+        $messages['photo_2'] = "Format incorrect ";
+        }
+    if(!isset($_FILES['photo_2']))
+        $messages['photo_2'] = "Veuillez saisir un fichier";
 
-       
-
-    // Vérifier la validité de l'extension .pdf des fichiers techniques
-    if(!preg_match('/\.(pdf)$/',$_FILES['techniquepdf']['name'])){
+  // Vérifier la validité de l'extension .pdf du fichier techniquepdf
+    if (preg_match('/\.(pdf)$/',$_FILES['techniquepdf']['name'])){
+        echo("ok");
+    }else{
         unset($_FILES['techniquepdf']) ;
-        $messages['techniquepdf'] = "Fichier non valide";
-    } 
+        $messages['techniquepdf'] = "Format incorrect ";
+    }
 
-    // Test si l'utilsateur a rentré un fichier technique
-    if (!isset($_FILES['techniquepdf']))
-        $messages['techniquepdf'] = "Veuillez saisir un fichier";
- 
-    // Test pour traiter les erreur lors de l'envoi du fichier technique
-    if ($_FILES['techniquepdf']['error'] != 0)
-        $messages['techniquepdf'] = "Erreur veuillez réessayer";
+    if(!isset($_FILES['techniquepdf']))
+    $messages['techniquepdf'] = "Veuillez saisir un fichier";
 
-    // Vérifier la validité de l'extension .pdf des fichiers SACEM
-    if(!preg_match('/\.(pdf)$/',$_FILES['sacempdf']['name'])){
-        unset($_FILES['sacempdf']) ;
-        $messages['sacempdf'] = "Fichier non valide";
-    } 
 
-     // Test si l'utilsateur a rentré un fichier SACEM
-    if (!isset($_FILES['sacempdf']))
-        $messages['sacempdf'] = "Veuillez saisir un fichier";
- 
-    // Test pour traiter les erreur lors de l'envoi du fichier SACEM
-    if ($_FILES['sacempdf']['error'] != 0)
-        $messages['sacempdf'] = "Erreur veuillez réessayer";
+
+    // Vérifier la validité de l'extension .pdf du fichier sacempdf
+     if (preg_match('/\.(pdf)$/',$_FILES['sacempdf']['name'])){
+          echo("ok");
+      }else{
+          unset($_FILES['sacempdf']) ;
+          $messages['sacempdf'] = "Format incorrect ";
+    }
+
+    if(!isset($_FILES['sacempdf']))
+    $messages['sacempdf'] = "Veuillez saisir un fichier";
     
     // Variable contenant l'ensemble des données des membres
     $mbrtot = $data->mbr1. " " .$data->mbr2. " " .$data->mbr3. " " .$data->mbr4. " " .$data->mbr5. " " .$data->mbr6. " " .$data->mbr7. " " .$data->mbr8;
