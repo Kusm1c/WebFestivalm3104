@@ -153,6 +153,7 @@
             <option value="998">998 - EXPATRIES ZONE 4</option>
             <option value="999">999 - ETRANGERS EN FRANCE</option>
         </select>
+        <span> {$messages.dpt|escape|default:''}</span>
       </div>
     </div>
 
@@ -209,8 +210,7 @@
       {* Input tél rép groupe *}
       <div class="group col-md-6"><br>
         <label for="phone">Téléphone :</label>
-        <input class="form-control" type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="0601020304"
-          requiredvalue={$value.phone|escape|default:''}>
+        <input class="form-control" type="tel" id="phone" name="phone" placeholder="0601020304" value={$value.phone|escape|default:''}>
         <span> {$messages.phone|escape|default:''}</span>
       </div>
     </div>
