@@ -29,9 +29,9 @@
           <label for="scene :">Type de scène :</label>
           <select class="form-control" name="scene" id="scene">
             <option value="rien" selected>--------------------</option>
-            <option value="Tribute">Tribute</option>
-            <option value="Acoustique">Acoustique</option>
-            <option value="Amplifié/Rock">Amplifié/Rock</option>
+            <option value="1">Tribute</option>
+            <option value="2">Acoustique/Folk</option>
+            <option value="3">Amplifié/Rock</option>
           </select>
           <span> {$messages.scene|escape|default:''}</span>
         </div>
