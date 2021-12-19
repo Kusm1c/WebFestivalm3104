@@ -10,7 +10,6 @@ Flight::route('GET /register', function () {
 });
 
 Flight::route('POST /register', function () {
-
     $data = Flight::request()->data;
     $messages = array();
 
@@ -32,64 +31,62 @@ Flight::route('POST /register', function () {
         $messages['mdp'] = "Mot de passe de 8 caractères minimum";
 
     // Test si le client a saisi un mail
-    if(empty(trim($data->mail))){
-        $messages['mail'] = "Mail obligatoire";
-    //Test la validité de l'adresse  mail saisi
-    } else if(!filter_var($data->mail, FILTER_VALIDATE_EMAIL)){
-    $messages['mail'] = "Mail non valide";
-    // Test si l'adresse mail existe déjà
+    if (empty(trim($data->email))) {
+        $messages['email'] = "Adresse email obligatoire";
+        //Test la validité de l'adresse  mail saisi
+    } else if (!filter_var($data->email, FILTER_VALIDATE_EMAIL)) {
+        $messages['email'] = "Adresse email non valide";
+        // Test si l'adresse mail existe déjà
     } else {
-        $testDupli = Flight::get('pdo')->prepare("select utilisateur.email from utilisateur where utilisateur.email like :recherche");
-        $testDupli->execute(array(':recherche' => "%$data->mail%"));
-            if ($testDupli->fetch(PDO::FETCH_NUM) != 0) {
-                $messages['mail']="Adresse email déjà existante";
+        $testDupli = Flight::get('db')->prepare("select utilisateur.email from utilisateur where utilisateur.email like :recherche");
+        $testDupli->execute(array(':recherche' => "%$data->email%"));
+        if ($testDupli->fetch(PDO::FETCH_NUM) != 0) {
+            $messages['email'] = "Adresse email déjà existante";
+        }
     }
-}
 
     // Vérifie si l'utilisateur a saisi un code postal
     if (empty(trim($data->codePostal)))
-        $messages['codePostal'] = "Code Postal obligatoire";
+        $messages['codePostal'] = "Code postal obligatoire";
 
     // Vérifie la validité du code postal
-    if (!preg_match("~^[0-9]{5}$~", $data->code))
+    if (!preg_match("~^[0-9]{5}$~", $data->codePostal))
         $messages['codePostal'] = "Code postal invalide";
 
     // Vérifie si l'utilisateur a saisi un numero de telephone
-    if (strlen($data->phone) == 10)
-        $messages['phone'] = "Numero de telephone à 10 chiffres";
+    if (strlen($data->phone) != 10)
+        $messages['phone'] = "Numéro saisi invalide";
 
     // Vérifie si l'utilisateur a saisi un numero de telephone
     if (empty(trim($data->phone)))
-        $messages['phone'] = "Numero de telephone obligatoire";
+        $messages['phone'] = "Numéro de téléphone obligatoire";
 
     // Vérifie si l'utilisateur a saisi une addresse
-    if (empty(trim($data->adresse))) 
-        $messages['adresse']="Adresse obligatoire";
-        
+    if (empty(trim($data->adresse)))
+        $messages['adresse'] = "Adresse obligatoire";
 
-    // SI nous avons aucun messages d'erreurs alors envoyer les données dans la BDD
-    if (count($messages) <= 0) {
-        $db = Flight::get('db')->prepare("INSERT INTO utilisateur VALUES(:userid,:nom,:prenom,:adresse,:codePostal,:email,:telephone,:isAdmin,:mdp)");
+
+    // Si nous avons aucun messages d'erreurs alors envoyer les données dans la BDD
+    if (count($messages) == 0) {
+        $db = Flight::get('db')->prepare("INSERT INTO utilisateur VALUES(0,:nom,:prenom,:adresse,:codePostal,:email,:telephone,:isAdmin,:mdp)");
         $db->execute(array(
-            ':userid' => 1,
             ':nom' => $data->nom,
             ':prenom' => $data->prenom,
             ':adresse' => $data->adresse,
             ':codePostal' => $data->codePostal,
-            ':email' => $data->mail,
+            ':email' => $data->email,
             ':telephone' => $data->phone,
-            ':isAdmin'=> 0,
+            ':isAdmin' => 0,
             ':mdp' => password_hash($data->mdp, PASSWORD_DEFAULT),
-
         ));
-        //redirige vers la page  success
+        //Redirige vers la page success
         Flight::redirect("/success");
-        // sinon retour sur la page register et affichage des messages d'erreurs
+
+        //Sinon retour sur la page register et affichage des messages d'erreurs
     } else {
         Flight::render("register.tpl", array(
             'messages' => $messages,
             'valeurs' => $_POST
-
         ));
     }
 });
@@ -145,11 +142,11 @@ Flight::route('POST /formulaire', function () {
         $messages['code'] = "Code postal invalide";
 
     // Vérifie si l'utilisateur a saisi un mail
-    if (empty(trim($data->mail)))
+    if (empty(trim($data->email)))
         $messages['mail'] = "Adresse email obligatoire";
 
     // Vérifie si l'utilisateur a saisi un mail valide
-    if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL))
+    if (!filter_var($data->email, FILTER_VALIDATE_EMAIL))
         $messages['mail'] = "Adresse email non valide";
 
     // Vérifie la validité du numéro de téléphone
@@ -239,7 +236,7 @@ Flight::route('POST /formulaire', function () {
     if (!isset($files["mp3_3"]))
         $messages['mp3_3'] = "Veuillez saisir un fichier";
 
-    if ($files['dossierpdf'] == 'Aucun fichier choisi' ) {
+    if ($files['dossierpdf'] == 'Aucun fichier choisi') {
 
         // Vérifier la validité de l'extension .pdf des fichiers dossierpdf
         if (preg_match('/\.(pdf)$/', $files['dossierpdf']['name'])) {
@@ -310,15 +307,15 @@ Flight::route('POST /formulaire', function () {
     // Vérifie si l'utilisateur a saisi un membre
     if (empty(trim($mbrtot)))
         $messages['mrembre'] = "Au moins 1 membre requis (vous)";
-    
+
     // Si aucun messages d'erreurs
     if (count($messages) == 0) {
-     
 
-        $db = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
+
+        $db = Flight::get('db')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
         $db->execute(array(
             ':groupName' => $data->nomgrp,
-            ':groupID'=>1,
+            ':groupID' => 1,
             ':deptID' => $data->dpt,
             ':style' => $data->style,
             ':anneeCreation' => $data->annee,
@@ -341,10 +338,10 @@ Flight::route('POST /formulaire', function () {
             ':membres' => $mbrtot
         ));
 
-        $db = Flight::get('pdo')->prepare("INSERT INTO département VALUES(:département)");
+        $db = Flight::get('db')->prepare("INSERT INTO département VALUES(:département)");
         $db->execute(array(':département' => $data->dpt));
 
-        $db = Flight::get('pdo')->prepare("INSERT INTO scene VALUES(:scene)");
+        $db = Flight::get('db')->prepare("INSERT INTO scene VALUES(:scene)");
         $db->execute(array(':scene' => $data->scene));
         //redirige vers la page  success
 
@@ -361,51 +358,47 @@ Flight::route('POST /formulaire', function () {
 
 Flight::route('POST /login', function () {
     $data = Flight::request()->data;
-    $bd = Flight::get('pdo')->prepare("select Nom,email,Mdp from utilisateur where utilisateur.email like :recherche");
-    $email = $data->courriel;
-    $pass = $data->psw;
-
-    $message = array();
+    $db = Flight::get('db');
+    $email = $data->email;
+    $mdp = $data->mdp;
+    $messages = array();
 
     // Vérification des valeurs de login en les comparant à la base de données
     // bd prend le nom l'email et le mot de passe de la table utilisateur quand l'email de la recherche correspond à celui de la base de données 
-    // rowCount vérifie si les champs sont remplies
-    // fetch récupère les éléments de la base de données
+
 
     // Vérifie si l'utilisateur a saisi un mot de passe
-    if (empty(trim($data->mdp)))
+    if (empty(trim($mdp))) {
         $messages['mdp'] = "Mot de passe obligatoire";
-
-    // Vérifie si l'utilisateur a saisi un mot de passe de 8 caractères
-    if (strlen($data->mdp) <= 8)
+        // Vérifie si l'utilisateur a saisi un mot de passe de 8 caractères
+    } else if (strlen($mdp) < 8) {
         $messages['mdp'] = "Mot de passe de 8 caractères minimum";
+    }
 
-    if (empty(trim($data->mail))) {
-        $messages['mail'] = "Adresse email obligatoire";
-    } else if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
-        $messages['mail'] = "Adresse email non valide";
+    if (empty(trim($email))) {
+        $messages['email'] = "Adresse email obligatoire";
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $messages['email'] = "Adresse email non valide";
     } else {
-        $bd->execute(array(":recherche" => $data->mail));
-    }
-    if ($bd->rowCount() == 0) {
-        $messages['mail'] = "Email invalide";
-    }
-    if (empty(trim($data->mdp))) {
-        $messages['mdp'] = "Mot de passe obligatoire";
-    } else {
-        $row = $db->fetch();
-        if (!password_verify($data->mdp, $row['mdp'])) {
-            $messages['mdp'] = "Mot de passe incorrect";
+        $verifEmail = $db->prepare("select userid,prenom,email,isAdmin,mdp from utilisateur where utilisateur.email like :recherche");
+        $verifEmail->execute(array(":recherche" => $email));
+        $userData = $verifEmail->fetch();
+        if (empty($userData)) {
+            $messages['email'] = "Aucun compte existant pour cette adresse email";
+        } else if (!password_verify($mdp, $userData['mdp'])) {
+            $messages['mdp'] = "Mot de passe saisi incorrect";
         }
     }
 
-    if (count($messages) < 1) {
-        $_SESSION['user'] = $row['nom'];
+    if (count($messages) == 0) {
+        $_SESSION['userID'] = $userData['userid'];
+        $_SESSION['email'] = $userData['email'];
+        $_SESSION['prenom'] = $userData['prenom'];
+        $_SESSION['isAdmin'] = $userData['isAdmin'];
         Flight::redirect("/");
     } else {
-        Flight::render("login.tpl", array("value" => $_POST, "error" => $messages));
+        Flight::render("login.tpl", array("value" => $_POST, "messages" => $messages));
     }
-    $_SESSION['mail'] = $data->mail;
 });
 
 
