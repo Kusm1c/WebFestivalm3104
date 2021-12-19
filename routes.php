@@ -401,8 +401,7 @@ Flight::route('POST /login', function () {
     }
 });
 
-
 Flight::route('GET /logout', function () {
-    session_destroy();
+    $_SESSION = array();
     Flight::redirect("/");
 });
