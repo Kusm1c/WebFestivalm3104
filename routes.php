@@ -360,8 +360,10 @@ Flight::route('POST /formulaire', function () {
         $db = Flight::get('db')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
         $db->execute(array(
             ':groupName' => $data->nomgrp,
-            ':groupID' => 1,
+            ':groupID' => 0,
             ':deptID' => $data->dpt,
+            ':sceneID' => $data->scene,
+            ':repID' => $_SESSION['userID'],
             ':style' => $data->style,
             ':anneeCreation' => $data->annee,
             ':presentationTxT' => $data->presentation,
@@ -382,14 +384,6 @@ Flight::route('POST /formulaire', function () {
             ':docSacem' => $data->sacempdf,
             ':membres' => $mbrtot
         ));
-
-        $db = Flight::get('db')->prepare("INSERT INTO département VALUES(:département)");
-        $db->execute(array(':département' => $data->dpt));
-
-        $db = Flight::get('db')->prepare("INSERT INTO scene VALUES(:scene)");
-        $db->execute(array(':scene' => $data->scene));
-        //redirige vers la page  success
-
 
         Flight::redirect("/success");
         // sinon retour sur la page register et affichage des messages d'erreurs
