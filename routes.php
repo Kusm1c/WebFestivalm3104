@@ -71,7 +71,7 @@ Flight::route('POST /register', function () {
     if (count($messages) <= 0) {
         $db = Flight::get('db')->prepare("INSERT INTO utilisateur VALUES(:userid,:nom,:prenom,:adresse,:codePostal,:email,:telephone,:isAdmin,:mdp)");
         $db->execute(array(
-            ':userid' => 0,
+            ':userid' => 1,
             ':nom' => $data->nom,
             ':prenom' => $data->prenom,
             ':adresse' => $data->adresse,
@@ -313,19 +313,7 @@ Flight::route('POST /formulaire', function () {
     
     // Si aucun messages d'erreurs
     if (count($messages) == 0) {
-        $_SESSION['nomgrp'] = $data->nomgrp;
-        $_SESSION['dep'] = $data->dep;
-        $_SESSION['mp3_1'] = $data->mp3_1;
-        $_SESSION['mp3_2'] = $data->mp3_2;
-        $_SESSION['mp3_3'] = $data->mp3_3;
-        $_SESSION['style'] = $data->style;
-        $_SESSION['urlsite'] = $data->urlsite;
-        $_SESSION['urlsoundcloud'] = $data->urlsoundcloud;
-        $_SESSION['urlyoutube'] = $data->urlyoutube;
-        $_SESSION['experience'] = $data->experience;
-        $_SESSION['presentation'] = $data->presentation;
-        $_SESSION['sacempdf'] = $data->sacempdf;
-        $_SESSION['techniquepdf'] = $data->techniquepdf;
+     
 
         $db = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
         $db->execute(array(
@@ -359,6 +347,8 @@ Flight::route('POST /formulaire', function () {
         $db = Flight::get('pdo')->prepare("INSERT INTO scene VALUES(:scene)");
         $db->execute(array(':scene' => $data->scene));
         //redirige vers la page  success
+
+
         Flight::redirect("/success");
         // sinon retour sur la page register et affichage des messages d'erreurs
     } else {
