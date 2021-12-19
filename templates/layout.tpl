@@ -23,10 +23,23 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-link" href="./">Accueil</a>
+
+          {if isset($_session_) && !isset($_admin_)}
+              <a class="nav-link" href="profil">Profil</a>
+              <a class="nav-link" href="formulaire">Formulaire de candidature</a>
+              <a class="nav-link" href="candidature">Gérer votre candidature</a>
+              <a class="nav-link" href="logout">Déconnexion</a>
+          {else if isset($_session_) && isset($_admin_)}
+            <a class="nav-link" href="profil">Profil</a>
+            <a class="nav-link" href="candidature">Liste des candidatures</a>
+            <a class="nav-link" href="logout">Déconnexion</a>
+          {else}
             <a class="nav-link" href="login">Connexion</a>
-            <a class="nav-link" href="register">Inscription<a>
-                <a class="nav-link" href="profil">Profil</a>
-                <a class="nav-link" href="formulaire">Formulaire de candidature</a>
+            <a class="nav-link" href="register">Inscription</a>
+          {/if}
+          
+
+
           </div>
         </div>
       </div>
