@@ -95,6 +95,51 @@ Flight::route('GET /login', function () {
     Flight::render("login.tpl", array());
 });
 
+Flight::route('POST /login', function () {
+    $data = Flight::request()->data;
+    $db = Flight::get('db');
+    $email = $data->email;
+    $mdp = $data->mdp;
+    $messages = array();
+
+    // Vérification des valeurs de login en les comparant à la base de données
+    // bd prend le nom l'email et le mot de passe de la table utilisateur quand l'email de la recherche correspond à celui de la base de données 
+
+
+    // Vérifie si l'utilisateur a saisi un mot de passe
+    if (empty(trim($mdp))) {
+        $messages['mdp'] = "Mot de passe obligatoire";
+        // Vérifie si l'utilisateur a saisi un mot de passe de 8 caractères
+    } else if (strlen($mdp) < 8) {
+        $messages['mdp'] = "Mot de passe de 8 caractères minimum";
+    }
+
+    if (empty(trim($email))) {
+        $messages['email'] = "Adresse email obligatoire";
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $messages['email'] = "Adresse email non valide";
+    } else {
+        $verifEmail = $db->prepare("select userid,prenom,email,isAdmin,mdp from utilisateur where utilisateur.email like :recherche");
+        $verifEmail->execute(array(":recherche" => $email));
+        $userData = $verifEmail->fetch();
+        if (empty($userData)) {
+            $messages['email'] = "Aucun compte existant pour cette adresse email";
+        } else if (!password_verify($mdp, $userData['mdp'])) {
+            $messages['mdp'] = "Mot de passe saisi incorrect";
+        }
+    }
+
+    if (count($messages) == 0) {
+        $_SESSION['userID'] = $userData['userid'];
+        $_SESSION['email'] = $userData['email'];
+        $_SESSION['prenom'] = $userData['prenom'];
+        $_SESSION['isAdmin'] = $userData['isAdmin'];
+        Flight::redirect("/");
+    } else {
+        Flight::render("login.tpl", array("value" => $_POST, "messages" => $messages));
+    }
+});
+
 Flight::route('GET /formulaire', function () {
     Flight::render("form_candidat.tpl", array());
 });
@@ -353,51 +398,6 @@ Flight::route('POST /formulaire', function () {
             'messages' => $messages,
             'valeurs' => $_POST
         ));
-    }
-});
-
-Flight::route('POST /login', function () {
-    $data = Flight::request()->data;
-    $db = Flight::get('db');
-    $email = $data->email;
-    $mdp = $data->mdp;
-    $messages = array();
-
-    // Vérification des valeurs de login en les comparant à la base de données
-    // bd prend le nom l'email et le mot de passe de la table utilisateur quand l'email de la recherche correspond à celui de la base de données 
-
-
-    // Vérifie si l'utilisateur a saisi un mot de passe
-    if (empty(trim($mdp))) {
-        $messages['mdp'] = "Mot de passe obligatoire";
-        // Vérifie si l'utilisateur a saisi un mot de passe de 8 caractères
-    } else if (strlen($mdp) < 8) {
-        $messages['mdp'] = "Mot de passe de 8 caractères minimum";
-    }
-
-    if (empty(trim($email))) {
-        $messages['email'] = "Adresse email obligatoire";
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $messages['email'] = "Adresse email non valide";
-    } else {
-        $verifEmail = $db->prepare("select userid,prenom,email,isAdmin,mdp from utilisateur where utilisateur.email like :recherche");
-        $verifEmail->execute(array(":recherche" => $email));
-        $userData = $verifEmail->fetch();
-        if (empty($userData)) {
-            $messages['email'] = "Aucun compte existant pour cette adresse email";
-        } else if (!password_verify($mdp, $userData['mdp'])) {
-            $messages['mdp'] = "Mot de passe saisi incorrect";
-        }
-    }
-
-    if (count($messages) == 0) {
-        $_SESSION['userID'] = $userData['userid'];
-        $_SESSION['email'] = $userData['email'];
-        $_SESSION['prenom'] = $userData['prenom'];
-        $_SESSION['isAdmin'] = $userData['isAdmin'];
-        Flight::redirect("/");
-    } else {
-        Flight::render("login.tpl", array("value" => $_POST, "messages" => $messages));
     }
 });
 
