@@ -31,14 +31,20 @@ Flight::route('POST /register', function () {
     if (strlen($data->mdp) <= 8)
         $messages['mdp'] = "Mot de passe de 8 caractères minimum";
 
-    // Vérifie si l'utilisateur a saisi un mail
-    if (empty(trim($data->mail)))
-        $messages['mail'] = "Adresse email obligatoire";
-
-    // Vérifie si l'utilisateur a saisi un mail valide
-    if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL)) {
-        $messages['mail'] = "Adresse email non valide";
+    // Test si le client a saisi un mail
+    if(empty(trim($data->mail))){
+        $messages['mail'] = "Mail obligatoire";
+    //Test la validité de l'adresse  mail saisi
+    } else if(!filter_var($data->mail, FILTER_VALIDATE_EMAIL)){
+    $messages['mail'] = "Mail non valide";
+    // Test si l'adresse mail existe déjà
+    } else {
+        $testDupli = Flight::get('pdo')->prepare("select utilisateur.email from utilisateur where utilisateur.email like :recherche");
+        $testDupli->execute(array(':recherche' => "%$data->mail%"));
+            if ($testDupli->fetch(PDO::FETCH_NUM) != 0) {
+                $messages['mail']="Adresse email déjà existante";
     }
+}
 
     // Vérifie si l'utilisateur a saisi un code postal
     if (empty(trim($data->codePostal)))
@@ -46,7 +52,7 @@ Flight::route('POST /register', function () {
 
     // Vérifie la validité du code postal
     if (!preg_match("~^[0-9]{5}$~", $data->code))
-        $messages['code'] = "Code postal invalide";
+        $messages['codePostal'] = "Code postal invalide";
 
     // Vérifie si l'utilisateur a saisi un numero de telephone
     if (strlen($data->phone) == 10)
@@ -56,16 +62,23 @@ Flight::route('POST /register', function () {
     if (empty(trim($data->phone)))
         $messages['phone'] = "Numero de telephone obligatoire";
 
+    // Vérifie si l'utilisateur a saisi une addresse
+    if (empty(trim($data->adresse))) 
+        $messages['adresse']="Adresse obligatoire";
+        
+
     // SI nous avons aucun messages d'erreurs alors envoyer les données dans la BDD
     if (count($messages) <= 0) {
-        $db = Flight::get('pdo')->prepare("INSERT INTO utilisateur VALUES(:nom,:prenom,:mail,:mdp)");
+        $db = Flight::get('db')->prepare("INSERT INTO utilisateur VALUES(:userid,:nom,:prenom,:adresse,:codePostal,:email,:telephone,:isAdmin,:mdp)");
         $db->execute(array(
+            ':userid' => 0,
             ':nom' => $data->nom,
             ':prenom' => $data->prenom,
-            ':addresse' => $data->addresse,
-            'codePostal' => $data->codePostal,
-            ':mail' => $data->mail,
-            ':phone' => $data->phone,
+            ':adresse' => $data->adresse,
+            ':codePostal' => $data->codePostal,
+            ':email' => $data->mail,
+            ':telephone' => $data->phone,
+            ':isAdmin'=> 0,
             ':mdp' => password_hash($data->mdp, PASSWORD_DEFAULT),
 
         ));
