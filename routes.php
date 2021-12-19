@@ -294,8 +294,6 @@ Flight::route('POST /formulaire', function () {
     if (!isset($files['techniquepdf']))
         $messages['techniquepdf'] = "Veuillez saisir un fichier";
 
-
-
     // Vérifier la validité de l'extension .pdf du fichier sacempdf
     if (preg_match('/\.(pdf)$/', $files['sacempdf']['name'])) {
     } else {
@@ -312,27 +310,46 @@ Flight::route('POST /formulaire', function () {
     // Vérifie si l'utilisateur a saisi un membre
     if (empty(trim($mbrtot)))
         $messages['mrembre'] = "Au moins 1 membre requis (vous)";
-
+    
+    // Si aucun messages d'erreurs
     if (count($messages) == 0) {
-        $db = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:nomgrp,:dep,:style,:annee,:presentation,:experience,:urlsite,:urlsoundcloud,urlyoutube,:is_assoc,:is_sacem,:is_prod,:mp3,:dossierpdf,:photo,:techniquepdf,:sacempdf,:membres)");
+        $_SESSION['nomgrp'] = $data->nomgrp;
+        $_SESSION['dep'] = $data->dep;
+        $_SESSION['mp3_1'] = $data->mp3_1;
+        $_SESSION['mp3_2'] = $data->mp3_2;
+        $_SESSION['mp3_3'] = $data->mp3_3;
+        $_SESSION['style'] = $data->style;
+        $_SESSION['urlsite'] = $data->urlsite;
+        $_SESSION['urlsoundcloud'] = $data->urlsoundcloud;
+        $_SESSION['urlyoutube'] = $data->urlyoutube;
+        $_SESSION['experience'] = $data->experience;
+        $_SESSION['presentation'] = $data->presentation;
+        $_SESSION['sacempdf'] = $data->sacempdf;
+        $_SESSION['techniquepdf'] = $data->techniquepdf;
+
+        $db = Flight::get('pdo')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
         $db->execute(array(
-            ':nomgrp' => $data->nomgrp,
-            ':ep' => $data->dep,
+            ':groupName' => $data->nomgrp,
+            ':groupID'=>1,
+            ':deptID' => $data->dpt,
             ':style' => $data->style,
-            ':annee' => $data->annee,
-            ':presentation' => $data->presentation,
-            ':experience' => $data->experience,
-            ':urlsite' => $data->urlsite,
-            ':urlsoundcloud' => $data->urlsoundcloud,
-            ':urlyoutube' => $data->urlyoutube,
-            ':is_assoc' => $data->assoc,
-            ':is_sacem' => $data->sacem,
-            ':is_prod' => $data->prod,
-            ':mp3' => $data->mp3,
-            ':dossierpdf' => $data->dossierpdf,
-            ':photo' => $data->photo,
-            ':techniquepdf' => $data->techniquepdf,
-            ':sacempdf' => $data->sacempdf,
+            ':anneeCreation' => $data->annee,
+            ':presentationTxT' => $data->presentation,
+            ':expSceniques' => $data->experience,
+            ':liensReseaux' => $data->urlsite,
+            ':soundcloud' => $data->urlsoundcloud,
+            ':youtube' => $data->urlyoutube,
+            ':isAssoc' => $data->assoc,
+            ':isInscritSACEM' => $data->sacem,
+            ':isProd' => $data->prod,
+            ':fichierMp3' => $data->mp3_1,
+            ':fichierMp3' => $data->mp3_2,
+            ':fichierMp3' => $data->mp3_3,
+            ':pressePDF' => $data->dossierpdf,
+            ':photoGroupe' => $data->photo_1,
+            ':photoGroupe' => $data->photo_2,
+            ':ficheTechnique' => $data->techniquepdf,
+            ':docSacem' => $data->sacempdf,
             ':membres' => $mbrtot
         ));
 
