@@ -20,6 +20,8 @@ Flight::map('render', function ($template, $data) {
 
 if (isset($_SESSION["email"])) {
     Flight::view()->assign("_session_", $_SESSION["email"]);
+    Flight::view()->assign("_prenom_", $_SESSION["prenom"]);
+    Flight::view()->assign("_userID_", $_SESSION["userID"]);
     if ($_SESSION["isAdmin"] == 1)
         Flight::view()->assign("_admin_", $_SESSION["isAdmin"]);
 }
