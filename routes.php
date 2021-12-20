@@ -119,11 +119,13 @@ Flight::route('POST /login', function () {
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $messages['email'] = "Adresse email non valide";
     } else {
+        // check si l'adresse mail existe dans la BDD
         $verifEmail = $db->prepare("select userid,prenom,email,isAdmin,mdp from utilisateur where utilisateur.email like :recherche");
         $verifEmail->execute(array(":recherche" => $email));
         $userData = $verifEmail->fetch();
         if (empty($userData)) {
             $messages['email'] = "Aucun compte existant pour cette adresse email";
+            // check si le mdp saisi correspond à l'adresse mail saisie
         } else if (!password_verify($mdp, $userData['mdp'])) {
             $messages['mdp'] = "Mot de passe saisi incorrect";
         }
@@ -152,10 +154,12 @@ Flight::route('POST /formulaire', function () {
     // Vérifie si l'utilisateur a saisi un nom de groupe
     if (empty(trim($data->nomgrp)))
         $messages['nomgrp'] = "Nom de groupe obligatoire";
-
+     
+    // Vérifie si l'utilisateur a selectionné une scène
     if ($data->scene == "rien")
         $messages['scene'] = "Veuillez choisir une scène";
 
+    // Vérifie si l'utilisateur a selectionné un département
     if ($data->dpt == "rien")
         $messages['dpt'] = "Veuillez choisir un département";
 
@@ -248,33 +252,36 @@ Flight::route('POST /formulaire', function () {
 
 
 
-    // mp3_1
+    //  Vérifier la validité de l'extension .pdf du fichier mp3_1
     if (preg_match('/\.(mp3)$/', $files['mp3_1']['name'])) {
     } else {
         unset($files['mp3_1']);
         $messages["mp3_1"] = "Format incorrect ";
     }
+    // Vérifie si l'utilisateur a rentré un fichier pour mp3_1
     if (!isset($files["mp3_1"])) {
         $messages['mp3_1'] = "Veuillez saisir un fichier";
     }
 
-    //mp3_2
+    
+    //  Vérifier la validité de l'extension .pdf du fichier mp3_2
     if (preg_match('/\.(mp3)$/', $files['mp3_2']['name'])) {
     } else {
         unset($files['mp3_2']);
         $messages["mp3_2"] = "Format incorrect ";
     }
-
+    // Vérifie si l'utilisateur a rentré un fichier pour mp3_2
     if (!isset($files["mp3_2"]))
         $messages['mp3_2'] = "Veuillez saisir un fichier";
 
-    //mp3_3
+    
+    //  Vérifier la validité de l'extension .pdf du fichier mp3_3
     if (preg_match('/\.(mp3)$/', $files['mp3_3']['name'])) {
     } else {
         unset($files['mp3_3']);
         $messages["mp3_3"] = "Format incorrect ";
     }
-
+    // Vérifie si l'utilisateur a rentré un fichier pour mp3_3
     if (!isset($files["mp3_3"]))
         $messages['mp3_3'] = "Veuillez saisir un fichier";
 
@@ -287,14 +294,15 @@ Flight::route('POST /formulaire', function () {
             $messages['dossierpdf'] = "Format incorrect ";
         }
     }
+    // Vérifie si l'utilisateur a coché un des deux boutons pour l'association
     if (!isset($data->assoc)) {
         $messages['assoc'] = "Veuillez cocher oui ou non";
     }
-
+    // Vérifie si l'utilisateur a coché un des deux boutons pour la sacem
     if (!isset($data->sacem)) {
         $messages['sacem'] = "Veuillez cocher oui ou non";
     }
-
+    // Vérifie si l'utilisateur a coché un des deux boutons pour le producteur
     if (!isset($data->prod)) {
         $messages['prod'] = "Veuillez cocher oui ou non";
     }
@@ -308,7 +316,7 @@ Flight::route('POST /formulaire', function () {
         unset($files['photo_1']);
         $messages['photo_1'] = "Format incorrect ";
     }
-
+     // Vérifie si l'utilisateur a rentré un fichier pour photo_1
     if (!isset($files['photo_1']))
         $messages['photo_1'] = "Veuillez saisir un fichier";
 
@@ -320,6 +328,7 @@ Flight::route('POST /formulaire', function () {
         unset($files['photo_2']);
         $messages['photo_2'] = "Format incorrect ";
     }
+     // Vérifie si l'utilisateur a rentré un fichier pour photo_2
     if (!isset($files['photo_2']))
         $messages['photo_2'] = "Veuillez saisir un fichier";
 
@@ -329,7 +338,7 @@ Flight::route('POST /formulaire', function () {
         unset($files['techniquepdf']);
         $messages['techniquepdf'] = "Format incorrect ";
     }
-
+     // Vérifie si l'utilisateur a rentré un fichier techniquepdf
     if (!isset($files['techniquepdf']))
         $messages['techniquepdf'] = "Veuillez saisir un fichier";
 
@@ -339,7 +348,7 @@ Flight::route('POST /formulaire', function () {
         unset($files['sacempdf']);
         $messages['sacempdf'] = "Format incorrect ";
     }
-
+     // Vérifie si l'utilisateur a rentré un fichier pour sacempdf
     if (!isset($files['sacempdf']))
         $messages['sacempdf'] = "Veuillez saisir un fichier";
 
@@ -356,8 +365,9 @@ Flight::route('POST /formulaire', function () {
         $_SESSION['email'] = $userData['email'];
         $_SESSION['prenom'] = $userData['prenom'];
         $_SESSION['isAdmin'] = $userData['isAdmin'];
-
+    // préparation de la requête sql
         $db = Flight::get('db')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
+    //exécution     
         $db->execute(array(
             ':groupName' => $data->nomgrp,
             ':groupID' => 0,
@@ -384,7 +394,7 @@ Flight::route('POST /formulaire', function () {
             ':docSacem' => $data->sacempdf,
             ':membres' => $mbrtot
         ));
-
+        //redirection vers la racine après envoi
         Flight::redirect("/");
         // sinon retour sur la page register et affichage des messages d'erreurs
     } else {
