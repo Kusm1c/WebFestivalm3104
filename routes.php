@@ -80,7 +80,7 @@ Flight::route('POST /register', function () {
             ':mdp' => password_hash($data->mdp, PASSWORD_DEFAULT),
         ));
         //Redirige vers la page success
-        Flight::redirect("/success");
+        Flight::redirect("/");
 
         //Sinon retour sur la page register et affichage des messages d'erreurs
     } else {
@@ -187,11 +187,11 @@ Flight::route('POST /formulaire', function () {
         $messages['code'] = "Code postal invalide";
 
     // Vérifie si l'utilisateur a saisi un mail
-    if (empty(trim($data->email)))
+    if (empty(trim($data->mail)))
         $messages['mail'] = "Adresse email obligatoire";
 
     // Vérifie si l'utilisateur a saisi un mail valide
-    if (!filter_var($data->email, FILTER_VALIDATE_EMAIL))
+    if (!filter_var($data->mail, FILTER_VALIDATE_EMAIL))
         $messages['mail'] = "Adresse email non valide";
 
     // Vérifie la validité du numéro de téléphone
@@ -249,7 +249,6 @@ Flight::route('POST /formulaire', function () {
 
 
     // mp3_1
-
     if (preg_match('/\.(mp3)$/', $files['mp3_1']['name'])) {
     } else {
         unset($files['mp3_1']);
@@ -270,8 +269,6 @@ Flight::route('POST /formulaire', function () {
         $messages['mp3_2'] = "Veuillez saisir un fichier";
 
     //mp3_3
-
-
     if (preg_match('/\.(mp3)$/', $files['mp3_3']['name'])) {
     } else {
         unset($files['mp3_3']);
@@ -355,7 +352,10 @@ Flight::route('POST /formulaire', function () {
 
     // Si aucun messages d'erreurs
     if (count($messages) == 0) {
-
+        $_SESSION['userID'] = $userData['userid'];
+        $_SESSION['email'] = $userData['email'];
+        $_SESSION['prenom'] = $userData['prenom'];
+        $_SESSION['isAdmin'] = $userData['isAdmin'];
 
         $db = Flight::get('db')->prepare("INSERT INTO candidature VALUES(:groupName,:groupID,:deptID,:sceneID,repID,:style,:anneeCreation,:presentationTxT,expSceniques,:liensReseaux,:soundcloud,:youtube,:membres,:isAssoc,:isInscritSACEM,:isProd,:fichierMp3,:pressePDF,:photoGroupe,:ficheTechnique,:docSacem)");
         $db->execute(array(
@@ -385,7 +385,7 @@ Flight::route('POST /formulaire', function () {
             ':membres' => $mbrtot
         ));
 
-        Flight::redirect("/success");
+        Flight::redirect("/");
         // sinon retour sur la page register et affichage des messages d'erreurs
     } else {
         Flight::render("form_candidat.tpl", array(
@@ -398,4 +398,12 @@ Flight::route('POST /formulaire', function () {
 Flight::route('GET /logout', function () {
     $_SESSION = array();
     Flight::redirect("/");
+});
+
+Flight::route('GET /candidature', function () {
+    Flight::render("recap_candidature.tpl", array());
+});
+
+Flight::route('GET /list_candidature', function () {
+    Flight::render("list_candidature.tpl", array());
 });

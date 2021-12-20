@@ -202,7 +202,7 @@
       {* Input email rép groupe *}
       <div class="group col-md-6"><br>
         <label for="stacked-email">Email :</label>
-        <input class="form-control" type="email" id="mail" name="mail" placeholder="Email"
+        <input class="form-control" type="mail" id="mail" name="mail" placeholder="Email"
           value={$value.mail|escape|default:''}>
         <span> {$messages.mail|escape|default:''}</span>
       </div>
